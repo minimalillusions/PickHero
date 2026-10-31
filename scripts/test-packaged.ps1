@@ -35,7 +35,7 @@ if ([version]$result.python -lt [version]'3.12.14' -or $result.python -notmatch 
 if ($result.license_texts_verified -lt 1) {
     throw 'Die Lizenznachweise der EXE wurden nicht geprueft.'
 }
-if ($result.music_render_cases -ne 576) {
+if ($result.music_render_cases -ne 1152) {
     throw 'Die Musikstuecke und ihre Ergebnisansichten wurden nicht vollstaendig geprueft.'
 }
 if ($result.library_render_cases -ne 216) {
