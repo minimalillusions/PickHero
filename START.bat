@@ -2,6 +2,11 @@
 rem Startet PickHero aus der lokalen virtuellen Umgebung.
 rem Die Einrichtung nutzt eine gepatchte, projektlokale Python-Laufzeit.
 cd /d "%~dp0"
+if not exist "scripts\setup.ps1" (
+  echo PickHero ist noch nicht entpackt: Rechtsklick auf die ZIP-Datei, "Alle extrahieren".
+  echo PickHero is not unzipped yet: right-click the ZIP file, "Extract All".
+  goto :fehler
+)
 if not exist ".venv\Scripts\python.exe" (
   powershell -NoProfile -ExecutionPolicy Bypass -File scripts\setup.ps1 || goto :fehler
 )
@@ -15,4 +20,5 @@ goto :eof
 :fehler
 echo.
 echo PickHero konnte nicht gestartet werden. Fehler siehe oben.
+echo PickHero could not start. See the error above.
 pause

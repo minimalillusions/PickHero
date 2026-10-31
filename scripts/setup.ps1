@@ -23,12 +23,19 @@ function Assert-WorkspacePath([string]$Path) {
     return $absolute
 }
 if (-not (Get-Command uv -ErrorAction SilentlyContinue)) {
-    throw 'uv fehlt. Einmalig installieren: py -m pip install --user uv'
+    throw ('uv fehlt / uv is missing. Einmalig installieren / install once: ' +
+           'powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"')
 }
 
 # A project-local runtime: no PATH or registry changes, same CPython ABI as aubio.
-uv python install 3.12.14 --install-dir .python-runtime --no-bin --no-registry --no-config --python-downloads-json-url https://raw.githubusercontent.com/astral-sh/uv/main/crates/uv-python/download-metadata.json
-if ($LASTEXITCODE -ne 0) { throw 'Python konnte nicht eingerichtet werden.' }
+# Taken from uv's own built-in list. This used to point uv at a download list
+# on uv's main branch; uv moved that file, the address answered 404, and a
+# fresh setup failed for everyone. A current uv already knows 3.12.14.
+uv python install 3.12.14 --install-dir .python-runtime --no-bin --no-registry --no-config
+if ($LASTEXITCODE -ne 0) {
+    throw ('Python 3.12.14 konnte nicht eingerichtet werden / could not be set up. ' +
+           'uv aktualisieren / update uv: uv self update')
+}
 $runtimePython = Join-Path $projectRoot '.python-runtime\cpython-3.12.14-windows-x86_64-none\python.exe'
 $venvPath = Join-Path $projectRoot '.venv'
 $venvPython = Join-Path $venvPath 'Scripts\python.exe'
@@ -63,14 +70,14 @@ if ($sameAbi) {
     }
     & $runtimePython -m venv $venvPath
 }
-if ($LASTEXITCODE -ne 0) { throw 'Virtuelle Umgebung konnte nicht eingerichtet werden.' }
+if ($LASTEXITCODE -ne 0) { throw 'Virtuelle Umgebung konnte nicht eingerichtet werden. / Could not set up the virtual environment.' }
 
 $wheel = Join-Path $projectRoot 'wheels\aubio-0.4.9-cp312-cp312-win_amd64.whl'
 if ((Get-FileHash -LiteralPath $wheel -Algorithm SHA256).Hash -ne '624B508CFB51C34ABF682EA3EB64E8A12CDBB03FF214B688683FF82328052DD5') {
-    throw 'Die aubio-Datei stimmt nicht mit der geprueften Pruefsumme ueberein.'
+    throw 'Die aubio-Datei stimmt nicht mit der geprueften Pruefsumme ueberein. / The aubio file does not match its checked checksum.'
 }
 uv pip install --python $venvPython --find-links wheels -c constraints.txt -r requirements.txt
-if ($LASTEXITCODE -ne 0) { throw 'Abhaengigkeiten konnten nicht installiert werden.' }
+if ($LASTEXITCODE -ne 0) { throw 'Abhaengigkeiten konnten nicht installiert werden. / Could not install the dependencies.' }
 & $venvPython -m pickhero --self-test scratchpad/setup-selftest.json
-if ($LASTEXITCODE -ne 0) { throw 'Selbsttest fehlgeschlagen; siehe scratchpad/setup-selftest.json.' }
-Write-Host 'PickHero ist eingerichtet. Starten mit START.bat.'
+if ($LASTEXITCODE -ne 0) { throw 'Selbsttest fehlgeschlagen, siehe / Self-test failed, see scratchpad/setup-selftest.json' }
+Write-Host 'PickHero ist eingerichtet, Start mit START.bat. / PickHero is set up, start it with START.bat.'

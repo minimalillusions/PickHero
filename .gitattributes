@@ -6,3 +6,8 @@
 licenses/** -text
 wheels/** -text
 scripts/build-aubio-wheel.py -text
+
+# Batch files keep CRLF line endings in every checkout and in the ZIP
+# download. cmd.exe can miss a jump label in a file with bare LF endings,
+# and START.bat is the first thing a newcomer runs.
+*.bat text eol=crlf

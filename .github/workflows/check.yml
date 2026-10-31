@@ -20,7 +20,7 @@ jobs:
       - uses: astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff # v6
       - name: Install patched Python
         run: |
-          uv python install 3.12.14 --no-bin --no-registry --python-downloads-json-url https://raw.githubusercontent.com/astral-sh/uv/main/crates/uv-python/download-metadata.json
+          uv python install 3.12.14 --no-bin --no-registry
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           uv venv --python 3.12.14
       - name: Check wheel integrity

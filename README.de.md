@@ -31,16 +31,24 @@ eigenen, eingeschränkten Prozess gelesen.
 
 ## Loslegen
 
-Ein fertiger Windows-Download ist in Vorbereitung. Bis dahin startest du
-PickHero aus dem Quellcode (Windows, Python 3.12, [uv](https://docs.astral.sh/uv/)):
+Ein fertiger Download ist in Vorbereitung. Bis dahin drei Schritte unter
+Windows 10 oder 11 — Python brauchst du nicht, PickHero bringt sein eigenes mit:
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/setup.ps1
-.\START.bat
-```
+1. **uv installieren**, einmalig. PowerShell öffnen (Startmenü, *PowerShell* tippen) und einfügen:
+   ```powershell
+   powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+   ```
+   uv schon da? Mit `uv self update` aktualisieren.
+2. **PickHero holen:** oben auf dieser Seite der grüne Knopf **Code** →
+   **Download ZIP**. Dann Rechtsklick auf die ZIP-Datei → **Alle extrahieren**.
+3. **Doppelklick auf `START.bat`** im entpackten Ordner. Der erste Start
+   richtet alles ein, das dauert ein paar Minuten und braucht einmal Internet.
+   Danach startet es sofort. Meldet Windows, es habe den Computer geschützt:
+   PickHero ist nicht signiert — **Weitere Informationen**, dann **Trotzdem ausführen**.
 
-Du brauchst einen Eingang: ein USB-Mikrofon oder ein Instrumentenkabel in ein
-Audio-Interface.
+Schließ ein USB-Mikrofon an oder ein Instrumentenkabel an ein Audio-Interface.
+Beim ersten Start hilft dir ein kurzer Leitfaden, es auszuwählen und den
+Pegel einzustellen.
 
 ## Herkunft und Lizenz
 
