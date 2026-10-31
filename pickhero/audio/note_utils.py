@@ -23,6 +23,15 @@ STANDARD_TUNING = {
     6: 40,  # E2
 }
 
+# Bass ukulele / 4-string bass tuning: string 1 (G2) to string 4 (E1).
+# Same 1 = highest-pitched convention as STANDARD_TUNING above.
+BASS_TUNING = {
+    1: 43,  # G2
+    2: 38,  # D2
+    3: 33,  # A1
+    4: 28,  # E1
+}
+
 # Guitar range: low E open (40) to high E 24th fret (88)
 GUITAR_MIDI_MIN = 40
 GUITAR_MIDI_MAX = 88
@@ -147,3 +156,13 @@ def semitone_distance(midi_a: int, midi_b: int) -> int:
 def is_in_guitar_range(midi_note: int) -> bool:
     """Check if a MIDI note falls within standard guitar range."""
     return GUITAR_MIDI_MIN <= midi_note <= GUITAR_MIDI_MAX
+
+
+def is_in_instrument_range(midi_note: int, midi_min: int, midi_max: int) -> bool:
+    """Check if a MIDI note falls within an instrument's playable range.
+
+    The instrument-agnostic replacement for is_in_guitar_range. With the
+    guitar's own bounds (40, 88) it behaves identically; with a bass ukulele's
+    (28, 59) it stops discarding three of the four open strings.
+    """
+    return midi_min <= midi_note <= midi_max

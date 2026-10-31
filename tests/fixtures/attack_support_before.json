@@ -1,0 +1,146 @@
+[
+  {
+    "case": [
+      "guitar",
+      0,
+      null
+    ],
+    "key": "9986db313e4bdf5e093ad40787a0f72452d2131d6c8305a7357bbd5dbffc5a76"
+  },
+  {
+    "case": [
+      "guitar",
+      0,
+      48000
+    ],
+    "key": "fd01e9cce1724744c91390711f69f6de347cd7c6fc7848420d6d50064e2d13c0"
+  },
+  {
+    "case": [
+      "guitar",
+      0,
+      192000
+    ],
+    "key": "89bc67df9908830a8b7228c60abc2a7bbf5d57c984f06fa5b0fb696701766e56"
+  },
+  {
+    "case": [
+      "guitar",
+      -2,
+      null
+    ],
+    "key": "b9f0909e55e18c58b352340a8169f429ca7287560625f440699c5dc6d42015aa"
+  },
+  {
+    "case": [
+      "guitar",
+      -2,
+      48000
+    ],
+    "key": "68e924d3b821fdd16f86dc517bb2292ac807e152ba967e14152613fa2a6d1d23"
+  },
+  {
+    "case": [
+      "guitar",
+      -2,
+      192000
+    ],
+    "key": "3e7f9e7c2b01c6060d1a8702c35d114ccbe50d0178d2145a293a713a00d5bb7e"
+  },
+  {
+    "case": [
+      "bass_guitar",
+      0,
+      null
+    ],
+    "key": "ae8ab3eba0a5a62b56306db4ef556498591aafc209c1746d516b26579c8876e7"
+  },
+  {
+    "case": [
+      "bass_guitar",
+      0,
+      48000
+    ],
+    "key": "601443b7dfa553f68e80d69980889d336f79acde762fe55f39bdaf9de43b1d12"
+  },
+  {
+    "case": [
+      "bass_guitar",
+      0,
+      192000
+    ],
+    "key": "5e1e07b3b561b19c0fc90244167a0289874e8183d5343f1277907831df1a8e69"
+  },
+  {
+    "case": [
+      "bass_guitar",
+      -2,
+      null
+    ],
+    "key": "7aa61d7d9245f512f18a8816cb96fda4ec4a527cae7c48a7f03e8d887ecbd241"
+  },
+  {
+    "case": [
+      "bass_guitar",
+      -2,
+      48000
+    ],
+    "key": "c9077ef7a3e2782d0da07dfaf71075a73054d9cbce4dfd22c9f0361e77e0a78b"
+  },
+  {
+    "case": [
+      "bass_guitar",
+      -2,
+      192000
+    ],
+    "key": "970f5e0a55141cab212d19a0502ab2b40827dbb4c0566b4c3fb4a16182882770"
+  },
+  {
+    "case": [
+      "bass_ukulele",
+      0,
+      null
+    ],
+    "key": "da2a996ed1ad95901856772074b230591b2fd36f781c4f675a718009cfb0da34"
+  },
+  {
+    "case": [
+      "bass_ukulele",
+      0,
+      48000
+    ],
+    "key": "06384271a96481c2a90c6c8c7ecc8fc344d317fbae1e9e669915fcd51b751f91"
+  },
+  {
+    "case": [
+      "bass_ukulele",
+      0,
+      192000
+    ],
+    "key": "a9dc70ee9266322d0f609e3574421e26ef2805809356e2a5c54012b652efae52"
+  },
+  {
+    "case": [
+      "bass_ukulele",
+      -2,
+      null
+    ],
+    "key": "aacb546eb53177d7d3b647a4d2d15e4a4440e48542b89fdbc85fea713733bea2"
+  },
+  {
+    "case": [
+      "bass_ukulele",
+      -2,
+      48000
+    ],
+    "key": "ad755270256d3d1dee1fa4eb79435537f2c5057dd8d93b3961075a9b7201b435"
+  },
+  {
+    "case": [
+      "bass_ukulele",
+      -2,
+      192000
+    ],
+    "key": "fcbb9c2ce003b4f1fbdb514a8e2fc5d8a8b40ba267fd40a0f1b23ddaf976e799"
+  }
+]

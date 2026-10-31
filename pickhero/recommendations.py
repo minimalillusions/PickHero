@@ -1,37 +1,18 @@
-"""Practice recommendation engine.
+"""What to practise next, from the history of past attempts.
 
-Analyzes per-song progress history and generates short, actionable
-practice suggestions shown on the completion screen.
-
-INTEGRATION NOTES (for scrolling.py):
-1. Import: from pickhero.recommendations import generate_recommendations
-2. In update() song completion block (~line 285-301):
-   - Call progress_tracker.record_detailed_result(...) instead of record_result(...)
-   - Example:
-       self._is_new_best, self._recommendations = (
-           self._progress_tracker.record_detailed_result(
-               self._song_key, stats,
-               self._matcher.get_weakest_sections(),
-               self._tempo_factor,
-           )
-       )
-   - Store returned recommendations in self._recommendations (list[str])
-3. In _draw_completion_overlay():
-   - After weakest section text (~line 652), render recommendation strings:
-       recs = getattr(self, "_recommendations", [])
-       rec_y = center_y + 170  # or adjust spacing as needed
-       for rec in recs:
-           rec_surf = hint_font.render(rec, True, t.hud_text)
-           surface.blit(rec_surf, (w // 2 - rec_surf.get_width() // 2, rec_y))
-           rec_y += 24
-   - Shift the controls hint down accordingly
-4. In toggle_play() restart block, reset: self._recommendations = []
-5. No config.py changes needed.
+Shown on the completion screen. Four things are looked at -- how many
+attempts there have been, whether this one was better than the last few,
+whether the tempo should move, and which bars keep failing -- and at most
+three lines come back. They are short on purpose: this is the moment the
+player finds out how it went, not a place for a report.
 """
 
 from __future__ import annotations
 
+import math
 from typing import TYPE_CHECKING
+
+from pickhero.i18n import t
 
 if TYPE_CHECKING:
     from pickhero.progress import SongRecord
@@ -42,8 +23,36 @@ _MAX_RECOMMENDATIONS = 3
 # Thresholds
 _WEAK_SECTION_ACCURACY = 70.0   # below this = weak
 _TEMPO_UP_ACCURACY = 90.0       # above this at current tempo = suggest faster
+_TEMPO_UP_TIMING = 90.0         # finding the notes alone does not prove fluency
 _TEMPO_DOWN_ACCURACY = 60.0     # below this = suggest slower
+_TEMPO_MIN = 0.25              # the player's supported minimum speed
 _PLATEAU_THRESHOLD = 2.0        # accuracy change < this across 3 attempts = plateau
+
+
+def section_tempo_suggestion(history: list[dict]) -> float | None:
+    """Three consecutive comparable, measured loops unlock a voluntary +5%."""
+    recent = history[-3:]
+    if len(recent) != 3:
+        return None
+    first = recent[0]
+    comparable = ("start_ms", "end_ms", "tempo_factor", "filter_key", "total")
+    if any(any(entry.get(key) != first.get(key) for key in comparable) for entry in recent):
+        return None
+    for entry in recent:
+        if entry.get("timing_unknown", 0):
+            return None
+        if not all(entry.get(flag) is True for flag in
+                   ("reliable", "timing_assessed", "uniform_tempo", "complete_loop")):
+            return None
+        if entry.get("total", 0) < 4:
+            return None
+        for metric in ("accuracy", "timing_percent"):
+            value = entry.get(metric)
+            if (isinstance(value, bool) or not isinstance(value, (int, float))
+                    or not math.isfinite(value) or not 90 <= value <= 100):
+                return None
+    tempo = first.get("tempo_factor", 1)
+    return round(min(1.0, tempo + .05), 2) if .25 <= tempo < 1 else None
 
 
 def generate_recommendations(
@@ -60,7 +69,7 @@ def generate_recommendations(
         current_stats: Dict from matcher.get_statistics() for this attempt.
         weakest_sections: List of (start_measure, end_measure, accuracy_pct)
                           from matcher.get_weakest_sections().
-        tempo_factor: Current tempo scaling factor (0.5 to 1.0).
+        tempo_factor: Current tempo scaling factor (0.25 to 1.0).
 
     Returns:
         List of short recommendation strings (max 3 items, ~60 chars each).
@@ -80,7 +89,12 @@ def generate_recommendations(
         recs.append(improvement)
 
     # 3. Tempo progression
-    tempo_rec = _tempo_recommendation(record, accuracy, tempo_factor)
+    tempo_rec = _tempo_recommendation(
+        record, accuracy, tempo_factor,
+        timing_percent=current_stats.get("timing_percent"),
+        timing_assessed=current_stats.get("timing_assessed", True),
+        timing_unknown=current_stats.get("timing_unknown", 0),
+    )
     if tempo_rec:
         recs.append(tempo_rec)
 
@@ -96,15 +110,15 @@ def generate_recommendations(
 def _attempt_milestone(attempts: int) -> str | None:
     """Return a milestone message for notable attempt counts."""
     if attempts == 1:
-        return "First attempt! Play again to track progress."
+        return t("rec.first_attempt")
     if attempts == 5:
-        return "5 attempts in -- building solid muscle memory."
+        return t("rec.fifth_attempt")
     if attempts == 10:
-        return "Attempt #10 -- you know this song well!"
+        return t("rec.tenth_attempt")
     if attempts == 25:
-        return "25 attempts! Dedication pays off."
+        return t("rec.attempt_25")
     if attempts > 0 and attempts % 50 == 0:
-        return f"Attempt #{attempts} -- true mastery takes practice."
+        return t("rec.attempt_milestone", n=attempts)
     return None
 
 
@@ -122,49 +136,60 @@ def _improvement_recommendation(
     if not recent:
         return None
 
-    recent_avg = sum(h["accuracy"] for h in recent) / len(recent)
+    recent_avg = sum(float(h.get("accuracy", 0.0)) for h in recent) / len(recent)
     diff = current_accuracy - recent_avg
 
     if diff > 5.0:
-        return f"Up {diff:.0f}% from recent average -- nice work!"
+        return t("rec.much_better", n=f"{diff:.0f}")
     if diff > 0:
-        return f"Improved {diff:.1f}% since last few attempts."
+        return t("rec.better", n=f"{diff:.1f}")
 
     # Check for plateau (last 3+ attempts within threshold)
     if len(recent) >= 2:
-        accuracies = [h["accuracy"] for h in recent] + [current_accuracy]
+        accuracies = [float(h.get("accuracy", 0.0)) for h in recent] + [current_accuracy]
         spread = max(accuracies) - min(accuracies)
         if spread < _PLATEAU_THRESHOLD and current_accuracy < 95.0:
-            return "Plateau detected -- try a different approach."
+            return t("rec.plateau")
 
     if diff < -5.0:
-        return "Accuracy dipped -- slow down and refocus."
+        return t("rec.worse")
 
     return None
 
 
 def _tempo_recommendation(
     record: SongRecord, accuracy: float, tempo_factor: float,
+    timing_percent: float | None = None, timing_assessed: bool = True,
+    timing_unknown: int = 0,
 ) -> str | None:
-    """Suggest tempo changes based on accuracy at current speed."""
-    pct = int(tempo_factor * 100)
+    """Increase speed only when both pitch and measured timing are secure."""
+    if timing_unknown:
+        return None
+    pct = int(round(tempo_factor * 100))
+    timing_ready = (timing_assessed and isinstance(timing_percent, (int, float))
+                    and not isinstance(timing_percent, bool)
+                    and math.isfinite(timing_percent)
+                    and _TEMPO_UP_TIMING <= timing_percent <= 100.0)
+
+    if accuracy >= _TEMPO_UP_ACCURACY and not timing_ready:
+        return t("rec.practice_timing" if timing_assessed else "rec.practice_without_wait")
 
     if tempo_factor >= 1.0:
         # Already at full speed
         if accuracy >= _TEMPO_UP_ACCURACY:
-            return "Full speed at 90%+ accuracy -- well done!"
+            return t("rec.full_speed_clean")
         if accuracy < _TEMPO_DOWN_ACCURACY:
-            return f"Try slowing to {pct - 10}% to build accuracy."
+            return t("rec.slow_down_from_full", n=pct - 10)
         return None
 
     if accuracy >= _TEMPO_UP_ACCURACY:
         # Doing great at reduced tempo -- suggest increase
         new_pct = min(100, pct + 5)
-        return f"90%+ at {pct}% speed -- try bumping to {new_pct}%."
+        return t("rec.speed_up", n=pct, target=new_pct)
 
-    if accuracy < _TEMPO_DOWN_ACCURACY and tempo_factor > 0.5:
-        new_pct = max(50, pct - 5)
-        return f"Consider slowing to {new_pct}% to nail trouble spots."
+    if accuracy < _TEMPO_DOWN_ACCURACY and tempo_factor > _TEMPO_MIN:
+        new_pct = max(int(_TEMPO_MIN * 100), pct - 5)
+        return t("rec.slow_down", n=new_pct)
 
     return None
 
@@ -183,14 +208,19 @@ def _section_recommendation(
 
     # Check if this section has been consistently weak
     persistent = _is_persistent_weakness(record, start, end)
-    pct = int(tempo_factor * 100)
+    pct = int(round(tempo_factor * 100))
 
     if persistent and acc < _WEAK_SECTION_ACCURACY:
-        speed_hint = f" at {max(50, pct - 10)}%" if tempo_factor > 0.5 else ""
-        return f"Bars {start+1}-{end+1} still weak -- loop{speed_hint}."
+        # Two whole sentences rather than one with a clause glued on: the
+        # tail moves to a different place in other languages.
+        if tempo_factor > _TEMPO_MIN:
+            return t("rec.section_stuck_slow", start=start + 1, end=end + 1,
+                     n=max(int(_TEMPO_MIN * 100), pct - 10))
+        return t("rec.section_stuck", start=start + 1, end=end + 1)
 
     if acc < _WEAK_SECTION_ACCURACY:
-        return f"Try bars {start+1}-{end+1} on loop ({acc:.0f}% accuracy)."
+        return t("rec.section_loop", start=start + 1, end=end + 1,
+                 n=f"{acc:.0f}")
 
     return None
 

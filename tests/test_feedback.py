@@ -4,7 +4,7 @@ import pytest
 
 from pickhero.matcher import MatchResult, MatchType
 from pickhero.tabs.timeline import NoteEvent
-from pickhero.ui.colors import dimmed, get_theme
+from pickhero.ui.colors import dimmed, get_look
 from pickhero.ui.feedback import EFFECT_DURATION_MS, FeedbackRenderer
 
 
@@ -31,7 +31,7 @@ def _result(match_type: MatchType, events: list[NoteEvent],
 class TestNoteColor:
     def test_hit_color(self):
         """Active HIT effect returns green."""
-        t = get_theme()
+        t = get_look()
         renderer = FeedbackRenderer()
         note = _note_event()
         renderer.add_results([_result(MatchType.HIT, [note])], playback_ms=1000.0)
@@ -41,7 +41,7 @@ class TestNoteColor:
 
     def test_close_color(self):
         """Active CLOSE effect returns yellow."""
-        t = get_theme()
+        t = get_look()
         renderer = FeedbackRenderer()
         note = _note_event()
         renderer.add_results(
@@ -54,7 +54,7 @@ class TestNoteColor:
 
     def test_miss_color(self):
         """Active MISS effect returns red."""
-        t = get_theme()
+        t = get_look()
         renderer = FeedbackRenderer()
         note = _note_event()
         renderer.add_results([_result(MatchType.MISS, [note])], playback_ms=1000.0)
@@ -78,7 +78,7 @@ class TestNoteColor:
 
     def test_effect_expiry(self):
         """Effect stops showing bright color after EFFECT_DURATION_MS."""
-        t = get_theme()
+        t = get_look()
         renderer = FeedbackRenderer()
         note = _note_event()
         renderer.add_results([_result(MatchType.HIT, [note])], playback_ms=1000.0)

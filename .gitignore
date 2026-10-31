@@ -15,6 +15,23 @@ build/
 # Virtual environments
 venv/
 .venv/
+.venv-repair/
+.venv-before-repair-*/
+.python-runtime/
+scratchpad/runtime-backup-*/
+scratchpad/venv-backup-*/
+scratchpad/refinement-2026-10-02/datasets/
+scratchpad/refinement-2026-10-02/baseline_source/
+scratchpad/low-e-2026-10-02/datasets/
+scratchpad/low-e-2026-10-02/baseline_source/
+scratchpad/timing-2026-10-02/baseline_source/
+scratchpad/scrolling-2026-10-02/baseline_source/
+scratchpad/readability-2026-10-02/baseline_source/
+scratchpad/interface-completion-2026-10-03/baseline_source/
+scratchpad/interface-completion-2026-10-03/datasets/
+scratchpad/bass-next-2026-10-04/datasets/
+scratchpad/bass-attacks-2026-10-04/datasets/
+scratchpad/expansion-2026-10-03/baseline_source/
 env/
 
 # PyInstaller
@@ -42,11 +59,17 @@ PROJECT.md
 .mcp/
 
 # Songs directory content (GP files are large, user-specific)
-songs/*.gp3
-songs/*.gp4
-songs/*.gp5
-songs/*.gpx
-songs/*.gp
+songs/**/*.gp3
+songs/**/*.gp4
+songs/**/*.gp5
+songs/**/*.gpx
+songs/**/*.gp
+# Generated exercise set, rebuilt on startup from the instrument profile
+songs/Uebungen/
+# Generated music pieces and the app's record of which files it owns. The
+# record changes whenever the pieces are rebuilt -- another language, another
+# instrument -- so it is the app's state on this machine, not source.
+songs/Musikstuecke/
 !songs/.gitkeep
 
 # Temp files
@@ -54,3 +77,24 @@ tmp/
 
 # User config
 pickhero_config.json
+
+# Personal test takes (the app stores these outside the repository by default)
+recordings/
+
+# Local build candidates, browser profiles/downloads and private replay pointers
+scratchpad/completion-2026-10-15/aubio-source/
+scratchpad/completion-2026-10-15/aubio-wheel/
+scratchpad/completion-2026-10-15/aubio-candidate/
+scratchpad/completion-2026-10-15/aubio-final/
+scratchpad/completion-2026-10-15/aubio-reproducible/
+scratchpad/completion-2026-10-15/original-wheel/
+scratchpad/completion-2026-10-15/PickHero-before.exe
+scratchpad/completion-2026-10-15/browser-downloads*/
+scratchpad/completion-2026-10-15/browser.json
+scratchpad/completion-2026-10-15/private-replay-location.json
+
+# Working material for each investigation: 4354 files, 576 MB as of 2026-10-25.
+# The distilled findings live in docs/ and are committed; the raw traces,
+# datasets and build candidates are reproducible and stay out. The handful of
+# scratchpad files already tracked (the mockups in skins/) stay tracked.
+scratchpad/

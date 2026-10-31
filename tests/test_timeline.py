@@ -220,3 +220,40 @@ class TestTimeline:
         notes = [self._make_note(i * 100) for i in range(10)]
         tl = Timeline(notes)
         assert len(tl) == 10
+
+
+class TestWiderInstruments:
+    def test_a_seven_string_note_is_accepted(self):
+        """Seven- and eight-string guitars are ordinary instruments. Rejecting
+        the string number raised out of the loader and the song never opened."""
+        note = NoteEvent(timestamp_ms=0, duration_ms=100, midi_note=35,
+                         string=7, fret=0)
+        assert note.string == 7
+
+    def test_a_string_number_of_zero_is_still_refused(self):
+        with pytest.raises(ValueError):
+            NoteEvent(timestamp_ms=0, duration_ms=100, midi_note=40,
+                      string=0, fret=0)
+
+
+class TestActiveNoteWindow:
+    """The window bound was narrowed for speed; it must still find everything."""
+
+    def test_a_long_note_that_started_much_earlier_is_still_active(self):
+        long_note = NoteEvent(timestamp_ms=0, duration_ms=8000, midi_note=40,
+                              string=6, fret=0)
+        later = NoteEvent(timestamp_ms=7000, duration_ms=100, midi_note=45,
+                          string=5, fret=0)
+        timeline = Timeline([long_note, later])
+        active = timeline.get_active_notes_at_time(7000, window_ms=100)
+        assert long_note in active
+        assert later in active
+
+    def test_a_note_that_has_finished_is_not_active(self):
+        done = NoteEvent(timestamp_ms=0, duration_ms=100, midi_note=40,
+                         string=6, fret=0)
+        timeline = Timeline([done])
+        assert timeline.get_active_notes_at_time(7000, window_ms=100) == []
+
+    def test_an_empty_timeline_has_no_active_notes(self):
+        assert Timeline([]).get_active_notes_at_time(500) == []

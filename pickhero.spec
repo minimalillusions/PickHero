@@ -8,6 +8,10 @@ Output:      dist/PickHero.exe  (single-file, windowed)
 import glob
 import os
 import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(SPECPATH) / "build_support"))
+from bundle_policy import apply_policy
 
 from PyInstaller.utils.hooks import (
     collect_data_files,
@@ -18,11 +22,14 @@ block_cipher = None
 
 # ── Data files ──────────────────────────────────────────────────────────────
 # sounddevice bundles the PortAudio shared library as package data.
-# certifi provides the CA certificate bundle needed for HTTPS downloads
-# (Songsterr search/download via urllib).
 datas = []
 datas += collect_data_files("sounddevice")
-datas += collect_data_files("certifi")
+
+# The three looks are three typefaces. Without these the build runs but every
+# look falls back to Segoe UI, which is the one thing the bundling was for.
+# The licences go with them: SIL OFL requires it.
+datas += [("pickhero/assets/fonts", "pickhero/assets/fonts")]
+datas += [("licenses", "licenses")]
 
 # ── Native binaries / C extensions ──────────────────────────────────────────
 # aubio  — C pitch/onset detection library
@@ -55,10 +62,13 @@ a = Analysis(
         # UI
         "pygame",
         "pygame.midi",
+        "pickhero.ui.paint_studio",
+        "pickhero.ui.paint_stage",
+        "pickhero.ui.paint_hifi",
+        "pickhero.lang.de",
+        "pickhero.lang.en",
         # Tab loading — the pip package is "pyguitarpro", but the import is "guitarpro"
         "guitarpro",
-        # SSL certs for urllib HTTPS requests (Songsterr downloader)
-        "certifi",
     ],
     hookspath=[],
     hooksconfig={},
@@ -69,6 +79,11 @@ a = Analysis(
     cipher=block_cipher,
     noarchive=False,
 )
+
+# This application and its wheels support Windows x64. Avoid shipping unused
+# x86/ARM64 PortAudio binaries. Keep x64 ASIO for existing input configurations.
+# pygame's last-resort font uses the unchanged, already licensed Geist file.
+a.binaries, a.datas = apply_policy(a.binaries, a.datas, SPECPATH)
 
 pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 

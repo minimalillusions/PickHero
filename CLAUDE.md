@@ -23,7 +23,7 @@ Three threads:
 
 Modules:
 - `pickhero/audio/` — capture, detection, note utilities. No UI dependencies.
-- `pickhero/tabs/` — GP file loading, timeline data structure, Songsterr downloader. No UI dependencies.
+- `pickhero/tabs/` — GP file loading, timeline data structure. No UI dependencies.
 - `pickhero/ui/` — PyGame rendering, game loop, menus. Depends on audio and tabs.
 - `pickhero/config.py` — user settings (audio device, noise gate, visual prefs). JSON file in user home dir.
 
@@ -93,8 +93,7 @@ pickhero/
 ├── tabs/
 │   ├── __init__.py
 │   ├── loader.py
-│   ├── timeline.py
-│   └── downloader.py
+│   └── timeline.py
 └── ui/
     ├── __init__.py
     ├── app.py
@@ -103,8 +102,7 @@ pickhero/
     ├── scrolling.py
     ├── feedback.py
     ├── menu.py
-    ├── device_menu.py
-    └── download_menu.py
+    └── device_menu.py
 ```
 
 ## Testing
@@ -112,7 +110,6 @@ pickhero/
 - `tests/test_detector.py` — feed known sine waves to aubio, verify correct note detection
 - `tests/test_loader.py` — load a reference GP5 file, verify extracted notes match expected
 - `tests/test_timeline.py` — verify timeline tick advancement, note activation windows
-- `tests/test_downloader.py` — Songsterr search/download with mocked urllib responses
 - Use `pytest`. Keep tests independent of audio hardware (mock sounddevice).
 
 ## Build & Run

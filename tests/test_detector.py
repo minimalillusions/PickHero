@@ -131,3 +131,80 @@ class TestPitchDetector:
         # Should still work
         note = self._detect_note_from_sine(detector, 440.0)
         assert note == 69
+
+
+class TestStrikeReporting:
+    """What happens to a strike between the attack and the report.
+
+    Every case here was a note the player played that the app never saw.
+    """
+
+    def _detector(self):
+        from pickhero import instruments
+        det = PitchDetector(instrument=instruments.BASS_UKULELE,
+                            sample_rate=44100, noise_gate_db=-80.0)
+        det.min_note_gap_ms = 0.0
+        return det
+
+    def test_a_strike_that_runs_out_of_time_still_reports_what_it_heard(self):
+        """It takes one frame under the confidence threshold to run out of
+        time, and the votes already collected used to be thrown away."""
+        det = self._detector()
+        det._onset_pending = True
+        det._onset_age = det.onset_hold_hops
+        det._onset_votes = [43, 43, 31]
+        note = det.process(np.zeros(det.hop_size, dtype=np.float32))
+        assert note is not None
+        assert note.midi_note == 43
+        assert note.is_onset
+
+    def test_a_strike_with_a_single_vote_is_not_reported(self):
+        """One frame is one spectrum. Reporting it brings back the
+        fourth-confusions the vote exists to prevent."""
+        det = self._detector()
+        det._onset_pending = True
+        det._onset_age = det.onset_hold_hops
+        det._onset_votes = [43]
+        assert det.process(np.zeros(det.hop_size, dtype=np.float32)) is None
+
+    def test_a_strike_does_not_outlive_its_own_sound(self):
+        det = self._detector()
+        det._onset_pending = True
+        det._onset_age = 1
+        det._onset_votes = [38, 38]
+        note = det.process(np.zeros(det.hop_size, dtype=np.float32))
+        assert note is not None and note.midi_note == 38
+        assert det._onset_pending is False
+
+    def test_the_same_note_is_not_reported_twice_for_one_pluck(self):
+        """A single pluck fires the onset detector twice, about 120 ms apart."""
+        from pickhero.audio.detector import DetectedNote
+        det = self._detector()
+        det.min_note_gap_ms = 160.0
+        note = DetectedNote(midi_note=43, frequency=98.0, confidence=0.5,
+                            name="G2", is_onset=True)
+        assert det._report(note) is note
+        det._hops_seen += 4          # about 46 ms later
+        assert det._report(note) is None
+
+    def test_a_different_note_is_never_suppressed(self):
+        from pickhero.audio.detector import DetectedNote
+        det = self._detector()
+        det.min_note_gap_ms = 160.0
+        first = DetectedNote(midi_note=43, frequency=98.0, confidence=0.5,
+                             name="G2", is_onset=True)
+        second = DetectedNote(midi_note=38, frequency=73.4, confidence=0.5,
+                              name="D2", is_onset=True)
+        assert det._report(first) is first
+        det._hops_seen += 2
+        assert det._report(second) is second
+
+    def test_the_gap_reopens_after_it_has_passed(self):
+        from pickhero.audio.detector import DetectedNote
+        det = self._detector()
+        det.min_note_gap_ms = 160.0
+        note = DetectedNote(midi_note=43, frequency=98.0, confidence=0.5,
+                            name="G2", is_onset=True)
+        assert det._report(note) is note
+        det._hops_seen += int(0.200 * det.sample_rate / det.hop_size)
+        assert det._report(note) is note

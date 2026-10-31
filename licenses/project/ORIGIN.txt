@@ -1,0 +1,8 @@
+PickHero Herkunft / provenance
+
+Upstream: https://github.com/Artemarius/PickHero
+Fork: https://github.com/minimalillusions/PickHero
+Erster lokaler Git-Commit: 7af9c2526bdb3287500bf2403c54d30aa5505ffa
+Autor laut Git-Historie: Artem Shamsuarov
+Projektlizenz: MIT. LICENSE im Repository-Root nennt beide Urheber,
+Artem Shamsuarov und minimalillusions.

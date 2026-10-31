@@ -93,15 +93,15 @@ class TestListTracks:
         assert guitar_tracks[0]["name"] == "Rhythm Guitar"
         assert guitar_tracks[1]["name"] == "Solo Guitar"
 
-    def test_canon(self):
-        tracks = list_tracks(FIXTURES / "canon.gp5")
+    def test_ensemble(self):
+        tracks = list_tracks(FIXTURES / "ensemble.gp5")
         assert len(tracks) == 9
         guitar_tracks = [t for t in tracks if t["is_guitar"]]
         assert len(guitar_tracks) == 4
         # String ensemble (inst=49) and synth strings (inst=51) excluded
         non_guitar_names = {t["name"] for t in tracks if not t["is_guitar"]}
-        assert "Low Bassy Sound" in non_guitar_names
-        assert "High Soundy Thing" in non_guitar_names
+        assert "String Pad" in non_guitar_names
+        assert "Synth Pad" in non_guitar_names
 
     def test_percussion_excluded(self):
         tracks = list_tracks(FIXTURES / "Demo_v5.gp5")
@@ -138,11 +138,11 @@ class TestLoadGPFile:
         assert tl.metadata.tempo == 165
         assert tl.metadata.track_name == "Rhythm Guitar"
 
-    def test_canon_track0(self):
-        tl = load_gp_file(FIXTURES / "canon.gp5", track_index=0)
-        assert len(tl) == 1489
+    def test_ensemble_track0(self):
+        tl = load_gp_file(FIXTURES / "ensemble.gp5", track_index=0)
+        assert len(tl) == 512
         assert tl.metadata.tempo == 90
-        assert tl.metadata.track_name == "Guitar Player"
+        assert tl.metadata.track_name == "Lead Guitar"
 
     def test_standard_tuning(self):
         for fname in ["Slides.gp5", "notes.gp5", "Effects.gp5", "Tie.gp5"]:
@@ -152,7 +152,7 @@ class TestLoadGPFile:
     def test_timestamps_monotonic(self):
         for fname in [
             "Slides.gp5", "notes.gp5", "Effects.gp5", "Tie.gp5",
-            "Demo_v5.gp5", "canon.gp5",
+            "Demo_v5.gp5", "ensemble.gp5",
         ]:
             tl = load_gp_file(FIXTURES / fname)
             timestamps = [n.timestamp_ms for n in tl.notes]
@@ -161,28 +161,27 @@ class TestLoadGPFile:
                     f"{fname}: timestamp[{i}]={timestamps[i]} < [{i-1}]={timestamps[i-1]}"
                 )
 
-    def test_canon_tempo_changes_affect_timestamps(self):
+    def test_ensemble_tempo_changes_affect_timestamps(self):
         """Verify that tempo changes produce different ms values than constant tempo."""
-        tl = load_gp_file(FIXTURES / "canon.gp5", track_index=0)
+        tl = load_gp_file(FIXTURES / "ensemble.gp5", track_index=0)
         last_note = tl.notes[-1]
 
-        # At constant 90 BPM, the last note would be much later
-        # With tempo changes (faster sections), it's compressed
-        # Constant 90 BPM for the same tick would give ~598s
-        # With tempo changes it's ~322s
-        assert last_note.timestamp_ms < 400_000  # well under constant-tempo value
+        # At a constant 90 BPM the last note would come at about 171 s. The
+        # file speeds up to 120 and 140 BPM in the middle, which brings it to
+        # about 143 s.
+        assert 135_000 < last_note.timestamp_ms < 160_000
 
     def test_auto_select_guitar_track(self):
-        # canon.gp5 has guitar track at index 0
-        tl = load_gp_file(FIXTURES / "canon.gp5")
-        assert tl.metadata.track_name == "Guitar Player"
+        # ensemble.gp5 has its lead guitar at index 0
+        tl = load_gp_file(FIXTURES / "ensemble.gp5")
+        assert tl.metadata.track_name == "Lead Guitar"
 
     def test_explicit_track_index(self):
         tl = load_gp_file(FIXTURES / "Demo_v5.gp5", track_index=1)
         assert tl.metadata.track_name == "Solo Guitar"
 
     def test_duration_positive(self):
-        for fname in ["Slides.gp5", "notes.gp5", "canon.gp5"]:
+        for fname in ["Slides.gp5", "notes.gp5", "ensemble.gp5"]:
             tl = load_gp_file(FIXTURES / fname)
             assert tl.duration_ms > 0
             for note in tl.notes:

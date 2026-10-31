@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="de"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; media-src blob:; connect-src 'none'">
+<title>PickHero · Aufnahmen unabhängig prüfen</title>
+<style>
+:root{color-scheme:dark}*{box-sizing:border-box}body{background:#111315;color:#f0f2f3;font:16px/1.55 system-ui;margin:0}main{max-width:1080px;margin:auto;padding:32px 24px}h1{font-size:32px;line-height:1.15}p{max-width:60ch;color:#b8c1c6}section{background:#1b1f22;border:1px solid #343b3f;border-radius:12px;padding:20px;margin:20px 0}.controls{display:flex;gap:12px;flex-wrap:wrap;align-items:end}label{display:flex;flex-direction:column;gap:5px}button,input,select{font:inherit;border:1px solid #4b555d;border-radius:6px;padding:9px 12px;background:#242b30;color:inherit}button{cursor:pointer}button:disabled{opacity:.4;cursor:default}button.primary{background:#39b9d7;color:#091216;border-color:#39b9d7}button:focus-visible,input:focus-visible,select:focus-visible,canvas:focus-visible{outline:3px solid #ffd46b;outline-offset:3px}canvas{display:block;width:100%;height:180px;margin:16px 0;background:#101719;touch-action:none}audio{width:100%;margin:14px 0}table{width:100%;border-collapse:collapse}td,th{padding:10px;text-align:left;border-bottom:1px solid #353c42}output{font-variant-numeric:tabular-nums}#status{min-height:1.6em;color:#78d8ee}small{color:#b8c1c6}.scroll{overflow:auto}@media(max-width:600px){main{padding:20px 12px}section{padding:14px}h1{font-size:26px}}
+label{min-width:0;max-width:100%}input,select{min-width:0;max-width:100%}label:has(input[type=checkbox]){flex-direction:row;align-items:flex-start;gap:10px}input[type=checkbox]{flex:none;margin-top:6px}
+</style>
+<main>
+<h1>Hören. Anschlag markieren. Ton benennen.</h1>
+<p>Diese lokale Prüfhilfe zeigt bewusst keine App-Erkennung und keine Sollnoten. Markiere nur Anschläge und Töne, die du in der Aufnahme bestätigen kannst. Unsichere Stellen bleiben als offen gekennzeichnet.</p>
+<section><div class="controls">
+<label>WAV-Datei vom eigenen Rechner<input id="file" type="file" accept=".wav,audio/wav"></label>
+<label>Instrument<select id="profile"><option value="bass_ukulele">Bass-Ukulele</option><option value="bass_guitar">E-Bass</option><option value="guitar">Gitarre</option></select></label>
+</div><p>Die Datei bleibt auf deinem Rechner. Es gibt keinen Upload und keinen Mikrofonzugriff. Höchstens 32 MiB, zehn Minuten und zwei Kanäle sind zulässig.</p>
+<div id="status" role="status" aria-live="polite">Noch keine Aufnahme gewählt.</div>
+<audio id="audio" controls preload="metadata"></audio>
+<div class="controls">
+<button id="back" disabled>← Ausschnitt</button><button id="forward" disabled>Ausschnitt →</button>
+<label>Sichtbarer Zeitraum<select id="zoom"><option value="2">2 Sekunden</option><option value="5" selected>5 Sekunden</option><option value="10">10 Sekunden</option><option value="30">30 Sekunden</option></select></label>
+<label>Position in Sekunden<input id="time" type="number" step="0.001" min="0" value="0" disabled></label>
+<button id="listen" disabled>Ab Position hören</button>
+</div>
+<canvas id="wave" tabindex="0" aria-label="Wellenform. Klicken oder linke und rechte Pfeiltaste zum Positionieren; Schritt 10 Millisekunden, mit Umschalt 100 Millisekunden."></canvas>
+<small id="range">Wellenform wird nach dem Öffnen angezeigt. Pfeiltasten: 10 ms, mit Umschalt: 100 ms.</small>
+</section>
+<section><div class="controls">
+<label>Gehörter Ton<select id="pitch"></select></label>
+<button id="mark" class="primary" disabled>Anschlag markieren</button>
+<button id="uncertain" disabled>Stelle als unsicher markieren</button>
+</div><p>Die Markierung verwendet die gewählte Position, nicht den Zeitpunkt eines Tastendrucks während der Wiedergabe. Klicke eine Markierung in der Tabelle an, um sie erneut anzuhören. Für einen vollständigen Prüfsatz müssen auch hörbare, von der App übersehene Anschläge markiert werden.</p>
+<div class="scroll"><table><thead><tr><th>Zeit</th><th>Ton</th><th>Status</th><th>Aktion</th></tr></thead><tbody id="marks"></tbody></table></div>
+</section>
+<section><div class="controls">
+<label>Prüferkürzel<input id="reviewer" maxlength="40" autocomplete="off"></label>
+<label>Verwendung<select id="split"><option value="development">Entwicklung / bereits benutzt</option><option value="holdout">Unbenutzter Prüfsatz</option></select></label>
+<button id="save" disabled>Arbeitsstand speichern</button>
+<label>Gespeicherten Arbeitsstand laden<input id="load" type="file" accept=".json,application/json"></label>
+</div>
+<p><label><input id="complete" type="checkbox"> Ich habe die gesamte Aufnahme geprüft und alle hörbaren Anschläge markiert.</label></p>
+<button id="export" class="primary" disabled>Prüfdatei exportieren</button>
+<p>Speichere die Prüfdatei neben der unveränderten WAV. Sie ist mit <code>scripts/benchmark-audio.py</code> auswertbar. „Bisher nicht benutzt“ ist eine Angabe der prüfenden Person, kein automatisch nachgewiesener unabhängiger Test. Ein Ton ohne sicheren Notennamen verhindert den fertigen Export.</p>
+</section>
+</main>
+<script>
+'use strict';
+const el=id=>document.getElementById(id), state={buffer:null,file:null,sha:null,url:null,cursor:0,start:0,marks:[],dirty:false};
+let loadVersion=0;
+const names=['C','Cis','D','Dis','E','F','Fis','G','Gis','A','B','H'];
+const noteName=midi=>names[midi%12]+(Math.floor(midi/12)-1);
+for(let midi=24;midi<=100;midi++){const option=document.createElement('option');option.value=midi;option.textContent=noteName(midi);el('pitch').append(option)}el('pitch').value='28';
+const say=text=>el('status').textContent=text;
+function validatePCM(raw){
+ const view=new DataView(raw),size=raw.byteLength;
+ if(size<44||view.getUint32(0,false)!==0x52494646||view.getUint32(8,false)!==0x57415645||view.getUint32(4,true)+8!==size)throw Error('Keine vollständige RIFF-WAV-Datei.');
+ let format=null,bytes=null;
+ for(let at=12;at+8<=size;){const id=view.getUint32(at,false),length=view.getUint32(at+4,true),begin=at+8;if(begin+length>size)throw Error('Unvollständiger WAV-Abschnitt.');
+  if(id===0x666d7420){if(length<16||format!==null)throw Error('Ungültiges oder mehrfaches WAV-Format.');format={encoding:view.getUint16(begin,true),channels:view.getUint16(begin+2,true),rate:view.getUint32(begin+4,true),align:view.getUint16(begin+12,true),bits:view.getUint16(begin+14,true)}}
+  if(id===0x64617461){if(bytes!==null||format===null)throw Error('Audioabschnitt fehlt, steht vor dem Format oder ist mehrfach vorhanden.');bytes=length}at=begin+length+(length%2);
+ }
+ if(!format||bytes===null||format.encoding!==1||![1,2].includes(format.channels)||![8,16,24,32].includes(format.bits)||format.rate<8000||format.rate>192000||format.align!==format.channels*format.bits/8||bytes%format.align||bytes<=0||bytes/(format.align*format.rate)>600)throw Error('Erforderlich: PCM-WAV, 8–192 kHz, 1–2 Kanäle, 8–32 Bit und höchstens zehn Minuten.');
+}
+function changed(){state.dirty=true;el('complete').checked=false;refresh()}
+function setPosition(value){if(!state.buffer)return;state.cursor=Math.max(0,Math.min(state.buffer.duration,Number(value)||0));el('time').value=state.cursor.toFixed(3);draw()}
+function draw(){
+ const canvas=el('wave'),box=canvas.getBoundingClientRect(),scale=window.devicePixelRatio||1;canvas.width=Math.round(box.width*scale);canvas.height=Math.round(180*scale);
+ const ctx=canvas.getContext('2d');ctx.scale(scale,scale);if(!state.buffer)return;
+ const duration=Number(el('zoom').value),finish=Math.min(state.buffer.duration,state.start+duration),data=state.buffer.getChannelData(0),rate=state.buffer.sampleRate;
+ ctx.strokeStyle='#4fc6df';ctx.lineWidth=1;ctx.beginPath();
+ for(let px=0;px<box.width;px++){const a=Math.floor((state.start+px/box.width*duration)*rate),b=Math.min(data.length,Math.ceil((state.start+(px+1)/box.width*duration)*rate));let min=0,max=0;for(let n=a;n<b;n++){min=Math.min(min,data[n]);max=Math.max(max,data[n])}ctx.moveTo(px,90-min*80);ctx.lineTo(px,90-max*80)}ctx.stroke();
+ for(const mark of [...state.marks,{onset_s:state.cursor,cursor:true}]){if(mark.onset_s<state.start||mark.onset_s>state.start+duration)continue;const x=(mark.onset_s-state.start)/duration*box.width;ctx.strokeStyle=mark.cursor?'#ffd46b':mark.midi===null?'#efab64':'#70dbaa';ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,180);ctx.stroke()}
+ el('range').textContent=`${state.start.toFixed(3)} bis ${finish.toFixed(3)} s · Gesamtdauer ${state.buffer.duration.toFixed(3)} s · Kanal 1 von ${state.buffer.numberOfChannels}`;
+}
+function refresh(){
+ const ready=!!state.buffer;for(const id of ['back','forward','listen','time','mark','uncertain','save'])el(id).disabled=!ready;
+ el('export').disabled=!ready||!state.marks.length||state.marks.some(m=>m.midi===null)||!el('complete').checked||!el('reviewer').value.trim();
+ el('marks').replaceChildren();
+ state.marks.sort((a,b)=>a.onset_s-b.onset_s);
+ state.marks.forEach((mark,index)=>{const tr=document.createElement('tr');
+  const at=document.createElement('td'),jump=document.createElement('button');jump.textContent=mark.onset_s.toFixed(3)+' s';jump.onclick=()=>{state.start=Math.max(0,mark.onset_s-.5);setPosition(mark.onset_s);el('audio').currentTime=mark.onset_s};at.append(jump);tr.append(at);
+  for(const text of [mark.midi===null?'—':noteName(mark.midi),mark.midi===null?'Offen':'Benannt']){const td=document.createElement('td');td.textContent=text;tr.append(td)}
+  const action=document.createElement('td'),remove=document.createElement('button');remove.textContent='Entfernen';remove.setAttribute('aria-label',`Markierung bei ${mark.onset_s.toFixed(3)} Sekunden entfernen`);remove.onclick=()=>{state.marks.splice(index,1);changed()};action.append(remove);tr.append(action);el('marks').append(tr);
+ });draw();
+}
+function download(value,name){const url=URL.createObjectURL(new Blob([JSON.stringify(value,null,2)],{type:'application/json'})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+function add(midi){if(!state.buffer||state.cursor>=state.buffer.duration){say('Wähle eine Position vor dem Ende der Aufnahme.');return}if(state.marks.length>=10000){say('Höchstens 10.000 Markierungen.');return}if(state.marks.some(m=>Math.abs(m.onset_s-state.cursor)<.001)){say('An dieser Position gibt es bereits eine Markierung.');return}state.marks.push({onset_s:Number(state.cursor.toFixed(6)),midi});changed()}
+el('file').onchange=async()=>{
+ const file=el('file').files[0];if(!file)return;
+ if(state.dirty&&!confirm('Ungespeicherte Markierungen verwerfen?'))return;
+ const version=++loadVersion;
+ if(!file.name.toLowerCase().endsWith('.wav')||file.size>32*1024*1024){say('Bitte eine WAV-Datei bis 32 MiB wählen.');return}
+ try{say('Datei wird lokal gelesen …');const raw=await file.arrayBuffer();validatePCM(raw);
+  const context=new (window.AudioContext||window.webkitAudioContext)();let buffer;try{buffer=await context.decodeAudioData(raw.slice(0))}finally{await context.close()}
+  if(buffer.duration>600||buffer.numberOfChannels>2)throw Error('Höchstens zehn Minuten und zwei Kanäle sind zulässig.');
+  const sha=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',raw)),b=>b.toString(16).padStart(2,'0')).join('');
+  if(version!==loadVersion)return;
+  if(state.url)URL.revokeObjectURL(state.url);Object.assign(state,{buffer,file,sha,url:URL.createObjectURL(file),cursor:0,start:0,marks:[],dirty:false});el('audio').src=state.url;el('time').value='0';el('complete').checked=false;refresh();say(`${file.name} · Bereit zur unabhängigen Prüfung.`);
+ }catch(error){if(version===loadVersion)say(`Datei konnte nicht geöffnet werden: ${error.message}`)}
+};
+el('wave').onclick=event=>{const rect=el('wave').getBoundingClientRect();setPosition(state.start+(event.clientX-rect.left)/rect.width*Number(el('zoom').value))};
+el('wave').onkeydown=event=>{if(['ArrowLeft','ArrowRight'].includes(event.key)){event.preventDefault();setPosition(state.cursor+(event.key==='ArrowRight'?1:-1)*(event.shiftKey?.1:.01))}};
+el('time').onchange=()=>setPosition(el('time').value);
+el('zoom').onchange=draw;window.addEventListener('resize',draw);
+el('back').onclick=()=>{state.start=Math.max(0,state.start-Number(el('zoom').value));draw()};
+el('forward').onclick=()=>{state.start=Math.min(Math.max(0,state.buffer.duration-.001),state.start+Number(el('zoom').value));draw()};
+el('listen').onclick=async()=>{el('audio').currentTime=state.cursor;try{await el('audio').play()}catch{say('Wiedergabe bitte über den Audioplayer starten.')}};
+el('mark').onclick=()=>add(Number(el('pitch').value));el('uncertain').onclick=()=>add(null);
+el('complete').onchange=refresh;el('reviewer').oninput=()=>{state.dirty=true;refresh()};el('profile').onchange=changed;el('split').onchange=changed;
+el('save').onclick=()=>{download({schema:'pickhero-manual-review-1',sha256:state.sha,file:state.file.name,profile:el('profile').value,reviewer:el('reviewer').value,split:el('split').value,marks:state.marks,complete:el('complete').checked},state.file.name+'.review.json');state.dirty=false;say('Arbeitsstand heruntergeladen. Bewahre ihn bei der Aufnahme auf.')};
+el('load').onchange=async()=>{const file=el('load').files[0],version=loadVersion;if(!file||!state.buffer){say('Zuerst die zugehörige WAV-Datei öffnen.');return}try{if(file.size>4*1024*1024)throw Error('Arbeitsstand zu groß');const v=JSON.parse(await file.text());
+ if(version!==loadVersion||v.schema!=='pickhero-manual-review-1'||v.sha256!==state.sha||!['guitar','bass_guitar','bass_ukulele'].includes(v.profile)||!['development','holdout'].includes(v.split)||typeof v.reviewer!=='string'||v.reviewer.length>40||!Array.isArray(v.marks)||v.marks.length>10000||v.marks.some(m=>!m||typeof m.onset_s!=='number'||!Number.isFinite(m.onset_s)||m.onset_s<0||m.onset_s>=state.buffer.duration||(m.midi!==null&&(!Number.isInteger(m.midi)||m.midi<24||m.midi>100))))throw Error('Arbeitsstand passt nicht zur Aufnahme oder enthält ungültige Werte');
+ if(state.dirty&&!confirm('Ungespeicherte Markierungen ersetzen?'))return;
+ state.marks=v.marks.map(m=>({onset_s:m.onset_s,midi:m.midi}));el('profile').value=v.profile;el('reviewer').value=v.reviewer;el('split').value=v.split;el('complete').checked=v.complete===true;state.dirty=false;refresh();say('Arbeitsstand geladen.');
+ }catch(error){say(error.message)}};
+el('export').onclick=()=>{if(el('export').disabled)return;download({schema_version:1,files:[{path:state.file.name,sha256:state.sha,profile:el('profile').value,kind:'sequence',expected:state.marks.map(m=>({onset_s:m.onset_s,midi:m.midi})),groups:{split:el('split').value,annotation:'manual-complete',reviewer:el('reviewer').value.trim()}}]},state.file.name+'.manifest.json');state.dirty=false;say('Prüfdatei heruntergeladen. Neben der ursprünglichen WAV speichern.');};
+window.addEventListener('beforeunload',event=>{if(state.dirty){event.preventDefault();event.returnValue=''}});refresh();
+</script></html>

@@ -1,0 +1,49 @@
+name: Check PickHero
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    env:
+      SDL_VIDEODRIVER: dummy
+      SDL_AUDIODRIVER: dummy
+      PYGAME_HIDE_SUPPORT_PROMPT: "1"
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff # v6
+      - name: Install patched Python
+        run: |
+          uv python install 3.12.14 --no-bin --no-registry --python-downloads-json-url https://raw.githubusercontent.com/astral-sh/uv/main/crates/uv-python/download-metadata.json
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          uv venv --python 3.12.14
+      - name: Check wheel integrity
+        shell: pwsh
+        run: |
+          $actual = (Get-FileHash wheels/aubio-0.4.9-cp312-cp312-win_amd64.whl -Algorithm SHA256).Hash
+          if ($actual -ne "624B508CFB51C34ABF682EA3EB64E8A12CDBB03FF214B688683FF82328052DD5") { throw "aubio wheel checksum mismatch" }
+      - name: Install tested dependencies
+        run: uv pip install --find-links wheels -c constraints.txt -r requirements-dev.txt
+      - name: Prepare bundled notices
+        run: .venv\Scripts\python scripts\build-notices.py
+      - name: Lint
+        run: .venv\Scripts\python -m ruff check --isolated --select E9,F63,F7,F82 pickhero tests build_support scripts
+      - name: Test
+        run: .venv\Scripts\python -m pytest tests -q
+      - name: Test source application
+        run: .venv\Scripts\python -m pickhero --self-test source-selftest.json
+      - name: Build local executable
+        run: .venv\Scripts\python -m PyInstaller pickhero.spec --noconfirm
+      - name: Verify bundled notices
+        run: .venv\Scripts\python scripts\build-notices.py --verify-exe dist\PickHero.exe
+      - name: Verify runtime provenance and packaging
+        run: .venv\Scripts\python scripts\check-bundle.py dist\PickHero.exe
+      - name: Test packaged application
+        shell: pwsh
+        run: .\scripts\test-packaged.ps1 -ReportPath packaged-selftest.json

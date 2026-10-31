@@ -140,9 +140,9 @@ class TestExtractBackingTrack:
         assert on_count == off_count
         assert on_count > 0
 
-    def test_canon_has_many_backing_events(self):
-        """canon.gp5 has 9 tracks, 4 guitar — should have lots of backing."""
-        bt = extract_backing_track(FIXTURES / "canon.gp5")
+    def test_ensemble_has_many_backing_events(self):
+        """ensemble.gp5 has 9 tracks, 4 guitar — should have lots of backing."""
+        bt = extract_backing_track(FIXTURES / "ensemble.gp5")
         assert len(bt) > 100
 
     def test_channels_in_valid_range(self):

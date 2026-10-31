@@ -1,0 +1,1214 @@
+{
+  "schema": 1,
+  "scope": "runtime notices; no application relicensing or publication clearance",
+  "inventory": {
+    "basis": "installed-runtime-candidates",
+    "artifact": null,
+    "note": "Vor Build: installierte Laufzeitkandidaten, kein Beleg, dass jede Datei gebündelt wird. Betriebssystem/Python-DLLs ergänzt erst --exe.",
+    "binaries": [
+      {
+        "path": "_cffi_backend.cp312-win_amd64.pyd",
+        "owner": "cffi",
+        "bytes": 181248,
+        "sha256": "9af5e4f68a41f26b726f2e9424f9d58a4f5666189f6a48be95f406b257102aec"
+      },
+      {
+        "path": "_sounddevice_data/portaudio-binaries/libportaudio32bit-asio.dll",
+        "owner": "PortAudio / sounddevice",
+        "bytes": 280576,
+        "sha256": "b96d817debe1747d8ca3a5e5b57d1021bf0207ebbd907242331357b97c65e6d7"
+      },
+      {
+        "path": "_sounddevice_data/portaudio-binaries/libportaudio32bit.dll",
+        "owner": "PortAudio / sounddevice",
+        "bytes": 260608,
+        "sha256": "3d27383a00397dae64b266189791ac20f84a19820778724e05705c2f6012dfd9"
+      },
+      {
+        "path": "_sounddevice_data/portaudio-binaries/libportaudio64bit-asio.dll",
+        "owner": "PortAudio / sounddevice",
+        "bytes": 343040,
+        "sha256": "e38618a0cb83a0287bee3b8bd68a710ae0d34178217ef4fa21ed56f765111943"
+      },
+      {
+        "path": "_sounddevice_data/portaudio-binaries/libportaudio64bit.dll",
+        "owner": "PortAudio / sounddevice",
+        "bytes": 307712,
+        "sha256": "ec080194f01e4095c7fb43dbd7ed05af922c5b34295056a9ff56782741d65481"
+      },
+      {
+        "path": "_sounddevice_data/portaudio-binaries/libportaudioarm64-asio.dll",
+        "owner": "PortAudio / sounddevice",
+        "bytes": 316416,
+        "sha256": "57b7826fd3883daabbb8951814655a4ec253acb822c0ff6ce4002da9463064f5"
+      },
+      {
+        "path": "_sounddevice_data/portaudio-binaries/libportaudioarm64.dll",
+        "owner": "PortAudio / sounddevice",
+        "bytes": 293888,
+        "sha256": "e39e95e95c0cb262c70ca4e676e440cf34be5643fe5a31cdfe23e8ab6f1422cb"
+      },
+      {
+        "path": "aubio/_aubio.cp312-win_amd64.pyd",
+        "owner": "aubio",
+        "bytes": 212480,
+        "sha256": "66fbd5720a53b9ae35e1e233b132b2b3a1c093a6412d9811c7567992335e182d"
+      },
+      {
+        "path": "numpy.libs/libscipy_openblas64_-ed4f167a5330424524f45258e7ca2c8d.dll",
+        "owner": "NumPy (OpenBLAS/LAPACK/GCC runtime notices included)",
+        "bytes": 20589056,
+        "sha256": "ed4f167a5330424524f45258e7ca2c8d7f03c0cba1f30ee4985553ac1f88ecf8"
+      },
+      {
+        "path": "numpy.libs/msvcp140-a4c2229bdc2a2a630acdc095b4d86008.dll",
+        "owner": "NumPy (OpenBLAS/LAPACK/GCC runtime notices included)",
+        "bytes": 575056,
+        "sha256": "a4c2229bdc2a2a630acdc095b4d86008e5c3e3bc7773174354f3da4f5beb9cde",
+        "pe_metadata": {
+          "FileVersion": "14.40.33810.0",
+          "LegalCopyright": "© Microsoft Corporation. All rights reserved.",
+          "ProductVersion": "14.40.33810.0"
+        }
+      },
+      {
+        "path": "numpy/_core/_multiarray_tests.cp312-win_amd64.pyd",
+        "owner": "NumPy (OpenBLAS/LAPACK/GCC runtime notices included)",
+        "bytes": 65536,
+        "sha256": "8fdd39b1dcd81239b1fe0b10744afd76dc85c8575aa09429b392e323fb750f4b"
+      },
+      {
+        "path": "numpy/_core/_multiarray_umath.cp312-win_amd64.pyd",
+        "owner": "NumPy (OpenBLAS/LAPACK/GCC runtime notices included)",
+        "bytes": 3854848,
+        "sha256": "a9d5c4202cf109bf24305f3f1180e0509aaf661ba850612bd75df7cfd9f928b8"
+      },
+      {
+        "path": "numpy/_core/_operand_flag_tests.cp312-win_amd64.pyd",
+        "owner": "NumPy (OpenBLAS/LAPACK/GCC runtime notices included)",
+        "bytes": 12288,
+        "sha256": "945f38c14b4db5a7b0245e05384aebc89f98d7de2518f27b7a925bdc5de15d90"
+      },
+      {
+        "path": "numpy/_core/_rational_tests.cp312-win_amd64.pyd",
+        "owner": "NumPy (OpenBLAS/LAPACK/GCC runtime notices included)",
+        "bytes": 43520,
+        "sha256": "e81ddc98f7a8aaea03c5fa4c78eecccbca8d7a76a8c77d15a08224dfa4d8b7f3"
+      },
+      {
+        "path": "numpy/_core/_simd.cp312-win_amd64.pyd",
+        "owner": "NumPy (OpenBLAS/LAPACK/GCC runtime notices included)",
+        "bytes": 831488,
+        "sha256": "084b3674eeea7c184a7b226bafb8995ff64a5331ec1dc43a9dd166baf4391b05"
+      },
+      {
+        "path": "numpy/_core/_struct_ufunc_tests.cp312-win_amd64.pyd",
+        "owner": "NumPy (OpenBLAS/LAPACK/GCC runtime notices included)",
+        "bytes": 14336,
+        "sha256": "129032221c18c9544f1798183fb69b305823c78b0a78fe819c01705fb6a39488"
+      },
+      {
+        "path": "numpy/_core/_umath_tests.cp312-win_amd64.pyd",
+        "owner": "NumPy (OpenBLAS/LAPACK/GCC runtime notices included)",
+        "bytes": 34304,
+        "sha256": "adcab506bb007e412f33fc3262cdcc35ec9278b09477babcbfb0902135b9f63b"
+      },
+      {
+        "path": "numpy/fft/_pocketfft_umath.cp312-win_amd64.pyd",
+        "owner": "NumPy (OpenBLAS/LAPACK/GCC runtime notices included)",
+        "bytes": 276480,
+        "sha256": "3ed9c2f73c7dc165e41e98ecfd0a4f66481a5afec7e39148a2af317b9a4ff62e"
+      },
+      {
+        "path": "numpy/linalg/_umath_linalg.cp312-win_amd64.pyd",
+        "owner": "NumPy (OpenBLAS/LAPACK/GCC runtime notices included)",
+        "bytes": 112128,
+        "sha256": "15884ab8ded82bc5f834e429a63cc9cfdcc24f61737a5c563efb2c2f274213a8"
+      },
+      {
+        "path": "numpy/linalg/lapack_lite.cp312-win_amd64.pyd",
+        "owner": "NumPy (OpenBLAS/LAPACK/GCC runtime notices included)",
+        "bytes": 18944,
+        "sha256": "c82cf326d254a9897f94453dd94ac2991c8a05ef106e3f4dd2268787d417b783"
+      },
+      {
+        "path": "numpy/random/_bounded_integers.cp312-win_amd64.pyd",
+        "owner": "NumPy (OpenBLAS/LAPACK/GCC runtime notices included)",
+        "bytes": 208896,
+        "sha256": "031cbd54dcbef2ff3fda13889879a6442f17c31df6d008154708b31d7582309c"
+      },
+      {
+        "path": "numpy/random/_common.cp312-win_amd64.pyd",
+        "owner": "NumPy (OpenBLAS/LAPACK/GCC runtime notices included)",
+        "bytes": 174080,
+        "sha256": "8bd4fcd63a3f0643a81b4095a8221a4a3917dd86816ecbeea595db237071369f"
+      },
+      {
+        "path": "numpy/random/_generator.cp312-win_amd64.pyd",
+        "owner": "NumPy (OpenBLAS/LAPACK/GCC runtime notices included)",
+        "bytes": 624640,
+        "sha256": "8dd9ad224065d8c38d99149d6816a519eb769b3e01210164b3bcb186e7d59479"
+      },
+      {
+        "path": "numpy/random/_mt19937.cp312-win_amd64.pyd",
+        "owner": "NumPy (OpenBLAS/LAPACK/GCC runtime notices included)",
+        "bytes": 92672,
+        "sha256": "9b3aff503e8872d6e6b71b2d41a5a1304c02092cb75f5387194c3fa98c1a5610"
+      },
+      {
+        "path": "numpy/random/_pcg64.cp312-win_amd64.pyd",
+        "owner": "NumPy (OpenBLAS/LAPACK/GCC runtime notices included)",
+        "bytes": 105984,
+        "sha256": "f68a6a65df54920f091c6745694fd7adacc7311d980a429c8217385b43f8df26"
+      },
+      {
+        "path": "numpy/random/_philox.cp312-win_amd64.pyd",
+        "owner": "NumPy (OpenBLAS/LAPACK/GCC runtime notices included)",
+        "bytes": 89088,
+        "sha256": "1872654c8ade0ed9e11ca3f1b2714154f39a0cef46416b48e40c7e96a6dc2018"
+      },
+      {
+        "path": "numpy/random/_sfc64.cp312-win_amd64.pyd",
+        "owner": "NumPy (OpenBLAS/LAPACK/GCC runtime notices included)",
+        "bytes": 64000,
+        "sha256": "958af4dd25196f436d67b681c64a8639f0ec5a98dbb37124859def7eb353c0ab"
+      },
+      {
+        "path": "numpy/random/bit_generator.cp312-win_amd64.pyd",
+        "owner": "NumPy (OpenBLAS/LAPACK/GCC runtime notices included)",
+        "bytes": 173056,
+        "sha256": "1e7a030cfd348ab125a681eaf21b227be145d8329430b8d521f9bde520390267"
+      },
+      {
+        "path": "numpy/random/mtrand.cp312-win_amd64.pyd",
+        "owner": "NumPy (OpenBLAS/LAPACK/GCC runtime notices included)",
+        "bytes": 522752,
+        "sha256": "2dbf4488af25a9d6b2863b3eea53d4a39b692b3be579e970761730d310e8ea65"
+      },
+      {
+        "path": "pygame/SDL2.dll",
+        "owner": "SDL2 family",
+        "bytes": 2499072,
+        "sha256": "520d0459b91efa32fbccf9027a9ca1fc5aae657e679ce8e90f179f9cf5afd279",
+        "pe_metadata": {
+          "FileVersion": "2, 28, 4, 0",
+          "LegalCopyright": "Copyright (C) 2023 Sam Lantinga",
+          "ProductVersion": "2, 28, 4, 0"
+        }
+      },
+      {
+        "path": "pygame/SDL2_image.dll",
+        "owner": "SDL2 family",
+        "bytes": 125440,
+        "sha256": "1e364af75fee0c83506fbdfd4d5b0e386c4e9c6a33ddbddac61ddb131e360194",
+        "pe_metadata": {
+          "FileVersion": "2, 0, 5, 0",
+          "LegalCopyright": "Copyright © 2019 Sam Lantinga",
+          "ProductVersion": "2, 0, 5, 0"
+        }
+      },
+      {
+        "path": "pygame/SDL2_mixer.dll",
+        "owner": "SDL2 family",
+        "bytes": 291840,
+        "sha256": "2a0fc5e9f72c2eaec3240cb82b7594a58ccda609485981f256b94d0a4dd8d6f8",
+        "pe_metadata": {
+          "FileVersion": "2, 6, 2, 0",
+          "LegalCopyright": "Copyright © 2022 Sam Lantinga",
+          "ProductVersion": "2, 6, 2, 0"
+        }
+      },
+      {
+        "path": "pygame/SDL2_ttf.dll",
+        "owner": "SDL2 family",
+        "bytes": 1552384,
+        "sha256": "fcdfabdfce868eb33f7514025ff59c1bb6c418f1bcd6ace2300a9cd4053e1d63",
+        "pe_metadata": {
+          "FileVersion": "2, 20, 1, 0",
+          "LegalCopyright": "Copyright © 2022 Sam Lantinga",
+          "ProductVersion": "2, 20, 1, 0"
+        }
+      },
+      {
+        "path": "pygame/_camera.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 17920,
+        "sha256": "8c12ed811761f29d5785ba0749c969eef9f0192a7d439ac4c5c80907b79030b3"
+      },
+      {
+        "path": "pygame/_freetype.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 78848,
+        "sha256": "353ff65c1f5efb5b805f1246805ec53b7cf6fb67ff4fa16b6f75c75ddf440f8a"
+      },
+      {
+        "path": "pygame/_sdl2/audio.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 168448,
+        "sha256": "bc4ace469ac663243967b33d4813b00516ed619787c00f24e41874d52b6c656b"
+      },
+      {
+        "path": "pygame/_sdl2/controller.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 105472,
+        "sha256": "3e360c72d8d82099de60f8d3395c0b53b6b141a2063c694777e30916f4e37fdb"
+      },
+      {
+        "path": "pygame/_sdl2/mixer.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 148992,
+        "sha256": "5da647678e6accecb109c1691137b3ab85ba5f8b80fb37c9d0fd9262c6dcaa41"
+      },
+      {
+        "path": "pygame/_sdl2/sdl2.cp312-win_amd64.pyd",
+        "owner": "SDL2 family",
+        "bytes": 45568,
+        "sha256": "879ed5c7eb935bd11a58b5fd2aca681724e77b8987640be57129c47de34d7be8"
+      },
+      {
+        "path": "pygame/_sdl2/touch.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 13824,
+        "sha256": "06df6d57a00689cd90343e17c34579bc18c7f760f5cce6e4f0f7dee8395a5610"
+      },
+      {
+        "path": "pygame/_sdl2/video.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 227328,
+        "sha256": "4a65b30781af842af8e91ad203f9d60b6370bae0fd4c2ec7500d9c2d556e9ada"
+      },
+      {
+        "path": "pygame/_sprite.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 326144,
+        "sha256": "7b3160acb9ae1c7c1aad06004e1984303792a02713d0769096ef8b42ce1085fd"
+      },
+      {
+        "path": "pygame/base.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 31232,
+        "sha256": "59fd2c87c8261f8de69fb70f881b41a13e522119503ae18fc068d607b4754bfe"
+      },
+      {
+        "path": "pygame/bufferproxy.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 18432,
+        "sha256": "7b1de4a711ac3b8c870a70d1b5db3a3684efd5ab258c4e1c42e715bd6e0a500c"
+      },
+      {
+        "path": "pygame/color.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 35840,
+        "sha256": "f1532048d8d89e0aff5a79f0dd96edaf7e75665c0292032c2b69a90374b4582a"
+      },
+      {
+        "path": "pygame/constants.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 50688,
+        "sha256": "99ef70bf473e1241a433f33dc7ec89dff64c831999de68612f2e642fd4a1d5dd"
+      },
+      {
+        "path": "pygame/display.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 45056,
+        "sha256": "6ce7e1f477c4aa614b1231b1a2ce345662bb36ed590157d48e219219f7459970"
+      },
+      {
+        "path": "pygame/draw.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 50176,
+        "sha256": "18e7ec3c61c272318b08adb7c5466c334abf6f75becc5824f5ab8fdc5f6e9a31"
+      },
+      {
+        "path": "pygame/event.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 44544,
+        "sha256": "b9a3dabaa705c50d3d78505195eb609e7883c01ec080db2f21e7251025b3309c"
+      },
+      {
+        "path": "pygame/font.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 24576,
+        "sha256": "413c4e8f918cb654dcd5788c5717142eb42af9ba1b07bc2ae94d1cb856783090"
+      },
+      {
+        "path": "pygame/freetype.dll",
+        "owner": "FreeType",
+        "bytes": 654336,
+        "sha256": "1c487392d6d06970ba3c7b52705881f1fb069f607243499276c2f0c033c7df6f",
+        "pe_metadata": {
+          "FileVersion": "2.11.1",
+          "ProductVersion": "2.11.1",
+          "LegalCopyright": "© 2000-2021 The FreeType Project www.freetype.org. All rights reserved."
+        }
+      },
+      {
+        "path": "pygame/gfxdraw.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 58880,
+        "sha256": "eca3bb896cb6bd295b9e2ded791c5ff9ed49dd9996916283b0f666c48a059cb6"
+      },
+      {
+        "path": "pygame/image.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 29696,
+        "sha256": "a6100714b22ceb504bc5a303f86ac28ceb1ac47796175f101e23e869eba4480c"
+      },
+      {
+        "path": "pygame/imageext.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 17408,
+        "sha256": "7ff15e58ae5f0de963508bf002d99363b7e9594a09beabdd99f5d9fb1edce0e3"
+      },
+      {
+        "path": "pygame/joystick.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 20480,
+        "sha256": "cf5c43e5dbe986dfadf17e9fa6583ba0932540f31d359024abfc69bcc2cb6f8c"
+      },
+      {
+        "path": "pygame/key.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 20992,
+        "sha256": "ce4815ce82bef66100d83b3244a5a0db2ec62a342d80b03e3e560d6aa5d7c583"
+      },
+      {
+        "path": "pygame/libjpeg-9.dll",
+        "owner": "IJG JPEG",
+        "bytes": 244224,
+        "sha256": "3a224af540c96574800f5e9acf64b2cdfb9060e727919ec14fbd187a9b5bfe69"
+      },
+      {
+        "path": "pygame/libmodplug-1.dll",
+        "owner": "libmodplug",
+        "bytes": 265216,
+        "sha256": "0c1a9032812ec4c20003a997423e67b71ecb5e59d62cdc18a5bf591176a9010e"
+      },
+      {
+        "path": "pygame/libogg-0.dll",
+        "owner": "Ogg",
+        "bytes": 25600,
+        "sha256": "57abc4f6a9accdd08bf9a2b022a66640cc626a5bd4dac6c7c4f06a5df61ee1fe"
+      },
+      {
+        "path": "pygame/libopus-0.dll",
+        "owner": "Opus",
+        "bytes": 368128,
+        "sha256": "771cae79410f7fcc4f993a105a18c4ed9e8cbddd6f807a42228d95f575808806"
+      },
+      {
+        "path": "pygame/libopusfile-0.dll",
+        "owner": "Opusfile",
+        "bytes": 46592,
+        "sha256": "ccaaca81810bd2d1cab4692b4253a639f8d5516996db0e24d881efd3efdcc6a4"
+      },
+      {
+        "path": "pygame/libpng16-16.dll",
+        "owner": "libpng",
+        "bytes": 210944,
+        "sha256": "e688b4a4d18f4b6ccc99c6ca4980f51218cb825610775192d9b60b2f05eff2d5"
+      },
+      {
+        "path": "pygame/libtiff-5.dll",
+        "owner": "libtiff",
+        "bytes": 432640,
+        "sha256": "ebfe97ac5ef26b94945af3db5ffd110a4b8e92dc02559bf81ccb33f0d5ebce95"
+      },
+      {
+        "path": "pygame/libwebp-7.dll",
+        "owner": "WebP",
+        "bytes": 447488,
+        "sha256": "9a53563b6058f70f2725029b7dd2fe96f869c20e8090031cd303e994dfe07b50"
+      },
+      {
+        "path": "pygame/mask.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 55296,
+        "sha256": "c506e7421bcc10b9d0b45ce44152c8fec242d310fd9fd9aff94d001e3893fa90"
+      },
+      {
+        "path": "pygame/math.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 76800,
+        "sha256": "515e2cf7344b6daedd464f567ca99978a47da14719b7f5a092c69a252b16c5f3"
+      },
+      {
+        "path": "pygame/mixer.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 37888,
+        "sha256": "cc32906e0a7bd93a7b638b8cbc3f77a42db340d6a42f81dc74f13752caaa7dda"
+      },
+      {
+        "path": "pygame/mixer_music.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 20480,
+        "sha256": "ff0f53cdf4705f57bd0d81e338526ed3a8cf054f8fd77dbc1a9d7e3347076934"
+      },
+      {
+        "path": "pygame/mouse.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 19456,
+        "sha256": "d0609d148cfc8337ed87ac92fba3e226efaea2405cdf488b9cdea540d3f05881"
+      },
+      {
+        "path": "pygame/newbuffer.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 21504,
+        "sha256": "9f723e8dd77d0691ac9fb7b212bf65e1a12009661a4cbed096beba322fd5b69b"
+      },
+      {
+        "path": "pygame/pixelarray.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 48128,
+        "sha256": "99ac7eab08cb2ff078ea515ca51ba8c86819d47b8820d41cb65d645f0fafddc0"
+      },
+      {
+        "path": "pygame/pixelcopy.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 27136,
+        "sha256": "d430b7bab200bba63a8b4f74081cf409c9fb42dc3e4f2097cc77988b7f9fbb82"
+      },
+      {
+        "path": "pygame/portmidi.dll",
+        "owner": "PortMidi",
+        "bytes": 41984,
+        "sha256": "c9f8d9043ac1570b10f104f2d00aec791f56261c84ee40773be73d0a3822e013"
+      },
+      {
+        "path": "pygame/pypm.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 104960,
+        "sha256": "2628cfcc517e79cd3badc1cd75f83cfd790ee39ce361e4535f38b84ad6eca751"
+      },
+      {
+        "path": "pygame/rect.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 45056,
+        "sha256": "38d709cb73a98dd54d666689212bfdddc2a68fcc4541c3b59a741815e4688b7c"
+      },
+      {
+        "path": "pygame/rwobject.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 19968,
+        "sha256": "b658da9b9b207f73325b9e9b84029258e64e324b8935671ce79b49f28a26b87e"
+      },
+      {
+        "path": "pygame/scrap.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 18944,
+        "sha256": "899ae5529294f98e91302fd56c6544020989d9fecce966e9743566043e50b926"
+      },
+      {
+        "path": "pygame/surface.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 239616,
+        "sha256": "bc64469279ac571f08173b2a09da78f1c0af3276e531fdf12ec3f9e9eca8fdde"
+      },
+      {
+        "path": "pygame/surflock.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 13824,
+        "sha256": "6c0c944037dc7a23e4ca6683d58085752453faf3be1e776a0ebd33f3d0fda8d5"
+      },
+      {
+        "path": "pygame/time.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 18944,
+        "sha256": "20025c990cc49ca1d58b84d0e3b9b84932a2ce98ae192d0415b7061369837d91"
+      },
+      {
+        "path": "pygame/transform.cp312-win_amd64.pyd",
+        "owner": "pygame",
+        "bytes": 58368,
+        "sha256": "e746b718c52de41492139a5152c842b0bfd8faaca4b992e8df562aa3c4ca97fd"
+      },
+      {
+        "path": "pygame/zlib1.dll",
+        "owner": "zlib (pygame)",
+        "bytes": 108544,
+        "sha256": "b1f58a17f3bfd55523e7bef685acf5b32d1c2a6f25abdcd442681266fd26ab08",
+        "pe_metadata": {
+          "FileVersion": "1.2.11",
+          "LegalCopyright": "(C) 1995-2017 Jean-loup Gailly & Mark Adler",
+          "ProductVersion": "1.2.11"
+        }
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "sounddevice",
+      "version": "0.5.6",
+      "license": "MIT",
+      "source": "https://github.com/spatialaudio/python-sounddevice",
+      "license_files": [
+        "python/sounddevice/sounddevice-0.5.6.dist-info/licenses/LICENSE"
+      ],
+      "license_metadata": "MIT"
+    },
+    {
+      "name": "aubio",
+      "version": "0.4.9",
+      "license": "GPL-3.0-or-later",
+      "source": "https://github.com/aubio/aubio/tree/0.4.9",
+      "license_files": [
+        "python/aubio/aubio-0.4.9.dist-info/licenses/AUTHORS",
+        "python/aubio/aubio-0.4.9.dist-info/licenses/COPYING"
+      ],
+      "license_metadata": "GNU/GPL version 3"
+    },
+    {
+      "name": "numpy",
+      "version": "2.5.3",
+      "license": "BSD-3-Clause; weitere Lizenzen im Wheel",
+      "source": "https://github.com/numpy/numpy",
+      "license_files": [
+        "python/numpy/numpy-2.5.3.dist-info/licenses/LICENSE.txt",
+        "python/numpy/numpy-2.5.3.dist-info/licenses/numpy/_core/include/numpy/libdivide/LICENSE.txt",
+        "python/numpy/numpy-2.5.3.dist-info/licenses/numpy/_core/src/common/pythoncapi-compat/COPYING",
+        "python/numpy/numpy-2.5.3.dist-info/licenses/numpy/_core/src/highway/LICENSE",
+        "python/numpy/numpy-2.5.3.dist-info/licenses/numpy/_core/src/multiarray/dragon4_LICENSE.txt",
+        "python/numpy/numpy-2.5.3.dist-info/licenses/numpy/_core/src/npysort/x86-simd-sort/LICENSE.md",
+        "python/numpy/numpy-2.5.3.dist-info/licenses/numpy/_core/src/umath/svml/LICENSE",
+        "python/numpy/numpy-2.5.3.dist-info/licenses/numpy/fft/pocketfft/LICENSE.md",
+        "python/numpy/numpy-2.5.3.dist-info/licenses/numpy/linalg/lapack_lite/LICENSE.txt",
+        "python/numpy/numpy-2.5.3.dist-info/licenses/numpy/ma/LICENSE",
+        "python/numpy/numpy-2.5.3.dist-info/licenses/numpy/random/LICENSE.md",
+        "python/numpy/numpy-2.5.3.dist-info/licenses/numpy/random/src/distributions/LICENSE.md",
+        "python/numpy/numpy-2.5.3.dist-info/licenses/numpy/random/src/mt19937/LICENSE.md",
+        "python/numpy/numpy-2.5.3.dist-info/licenses/numpy/random/src/pcg64/LICENSE.md",
+        "python/numpy/numpy-2.5.3.dist-info/licenses/numpy/random/src/philox/LICENSE.md",
+        "python/numpy/numpy-2.5.3.dist-info/licenses/numpy/random/src/sfc64/LICENSE.md",
+        "python/numpy/numpy-2.5.3.dist-info/licenses/numpy/random/src/splitmix64/LICENSE.md",
+        "python/numpy/numpy/_core/include/numpy/random/LICENSE.txt",
+        "python/numpy/numpy/ma/LICENSE",
+        "python/numpy/numpy/random/LICENSE.md"
+      ],
+      "license_metadata": "BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0"
+    },
+    {
+      "name": "PyGuitarPro",
+      "version": "0.11",
+      "license": "LGPL-3.0-only",
+      "source": "https://github.com/Perlence/PyGuitarPro",
+      "license_files": [
+        "python/pyguitarpro/pyguitarpro-0.11.dist-info/licenses/LICENSE"
+      ],
+      "license_metadata": "LGPL-3.0-only"
+    },
+    {
+      "name": "pygame",
+      "version": "2.6.1",
+      "license": "LGPL-2.1",
+      "source": "https://github.com/pygame/pygame/tree/2.6.1",
+      "license_files": [
+        "python/pygame/LGPL.txt"
+      ],
+      "license_metadata": "LGPL"
+    },
+    {
+      "name": "defusedxml",
+      "version": "0.7.1",
+      "license": "PSF-2.0",
+      "source": "https://github.com/tiran/defusedxml",
+      "license_files": [
+        "python/defusedxml/defusedxml-0.7.1.dist-info/LICENSE"
+      ],
+      "license_metadata": "PSFL"
+    },
+    {
+      "name": "attrs",
+      "version": "26.1.0",
+      "license": "MIT",
+      "source": "https://github.com/python-attrs/attrs",
+      "license_files": [
+        "python/attrs/attrs-26.1.0.dist-info/licenses/LICENSE"
+      ],
+      "license_metadata": "MIT"
+    },
+    {
+      "name": "cffi",
+      "version": "2.1.1",
+      "license": "MIT-0",
+      "source": "https://github.com/python-cffi/cffi",
+      "license_files": [
+        "python/cffi/cffi-2.1.1.dist-info/licenses/LICENSE"
+      ],
+      "license_metadata": "MIT-0"
+    },
+    {
+      "name": "PyInstaller bootloader / runtime hooks",
+      "version": "6.22.3",
+      "license": "GPL-2.0-or-later with bootloader exception; runtime hooks Apache-2.0",
+      "source": "https://pyinstaller.org/en/stable/license.html",
+      "license_files": [
+        "python/pyinstaller/pyinstaller-6.22.3.dist-info/licenses/COPYING.txt"
+      ]
+    },
+    {
+      "name": "CPython and bundled Windows runtime",
+      "version": "3.12.14",
+      "license": "PSF and historical/embedded notices; Microsoft redistributable conditions",
+      "source": "https://github.com/python/cpython/tree/v3.12.14",
+      "license_files": [
+        "python-runtime/LICENSE.txt"
+      ]
+    }
+  ],
+  "fonts": [
+    {
+      "family": "Geist",
+      "license": "OFL-1.1",
+      "source": "https://github.com/vercel/geist-font",
+      "license_file": "fonts/OFL-Geist.txt",
+      "files": [
+        {
+          "path": "pickhero/assets/fonts/Geist-Bold.ttf",
+          "sha256": "3f21f02b827228c3f0c5fb230d027b5a1a263013618e8052bc1b3c5692812c88"
+        },
+        {
+          "path": "pickhero/assets/fonts/Geist-Medium.ttf",
+          "sha256": "3a3b36f0d0b981f4857f7f00eeef4a5ee123605575d362ab31ee7c19e3d11f2f"
+        },
+        {
+          "path": "pickhero/assets/fonts/Geist-Regular.ttf",
+          "sha256": "85a1c6b18a6b0a06dfe9fd4f6d6a5d4979f74ec861eaef4bc7868b5492b8a117"
+        },
+        {
+          "path": "pickhero/assets/fonts/Geist-SemiBold.ttf",
+          "sha256": "b9f52322d6d20a7ff1e7fe1310ff12ec851aebb83d24f8b4f1d4149298f489b2"
+        }
+      ]
+    },
+    {
+      "family": "ChakraPetch",
+      "license": "OFL-1.1",
+      "source": "https://github.com/cadsondemak/Chakra-Petch",
+      "license_file": "fonts/OFL-ChakraPetch.txt",
+      "files": [
+        {
+          "path": "pickhero/assets/fonts/ChakraPetch-Bold.ttf",
+          "sha256": "c9c2ee076c89bce96fe318e91d1ff06f0b5217175373755adb70365a66d4ec64"
+        },
+        {
+          "path": "pickhero/assets/fonts/ChakraPetch-BoldItalic.ttf",
+          "sha256": "978a2829338c066144200f2d27b449fd1b006a353b61a00b8b946049c4ad4d6b"
+        },
+        {
+          "path": "pickhero/assets/fonts/ChakraPetch-Italic.ttf",
+          "sha256": "538a743f619494044277806c6a081eaa68e34aaaf222f00e0cb995f99a2857cf"
+        },
+        {
+          "path": "pickhero/assets/fonts/ChakraPetch-Regular.ttf",
+          "sha256": "a5466b946c7decc8021748dcde8b25b8a5325539a341ba9fb59307815b28da5d"
+        },
+        {
+          "path": "pickhero/assets/fonts/ChakraPetchSemiBold-Regular.ttf",
+          "sha256": "b27ff10e18f96386894f25a9e53a3b7c0244a70556461d2a9a99acb3465299fa"
+        }
+      ]
+    },
+    {
+      "family": "HankenGrotesk",
+      "license": "OFL-1.1",
+      "source": "https://github.com/HankenDesignCo/Hanken-Grotesk",
+      "license_file": "fonts/OFL-HankenGrotesk.txt",
+      "files": [
+        {
+          "path": "pickhero/assets/fonts/HankenGrotesk-Bold.ttf",
+          "sha256": "e9d18189973e32e2614842ca777412639245271ee5016cbbc5024b9081d686dc"
+        },
+        {
+          "path": "pickhero/assets/fonts/HankenGrotesk-Regular.ttf",
+          "sha256": "451376abefae9121f5dd0372d26865e7654b1041b9fdacdf57c6bd5cbf691da0"
+        },
+        {
+          "path": "pickhero/assets/fonts/HankenGroteskLight-Regular.ttf",
+          "sha256": "c1b4f967ba9f7c2b5439f6a05daaef3476466806eb2b3ea4639753f68646aa0e"
+        },
+        {
+          "path": "pickhero/assets/fonts/HankenGroteskMedium-Regular.ttf",
+          "sha256": "366c9f60de8654362826a500399e568e6198696b8fbd999ba7d0c03c9ba742b6"
+        }
+      ]
+    },
+    {
+      "family": "JetBrainsMono",
+      "license": "OFL-1.1",
+      "source": "https://github.com/JetBrains/JetBrainsMono",
+      "license_file": "fonts/OFL-JetBrainsMono.txt",
+      "files": [
+        {
+          "path": "pickhero/assets/fonts/JetBrainsMono-Bold.ttf",
+          "sha256": "a1d92abc6b02a87faed23d98067ab1027e8e95242fd7c9978a072ea383b89d1a"
+        },
+        {
+          "path": "pickhero/assets/fonts/JetBrainsMono-Regular.ttf",
+          "sha256": "44ce4a84f20d60f24539bd0cef11f79c29e38609e0f8adf18551c9794a5d9dc3"
+        }
+      ]
+    },
+    {
+      "family": "pygame FreeSans (installed source environment; replaced in EXE)",
+      "license": "GNU GPL per embedded metadata; exact exception/version not established",
+      "source": "https://www.gnu.org/software/freefont/license.html",
+      "license_file": "upstream/freefont/GPL-2.0.txt",
+      "files": [
+        {
+          "path": "pygame/freesansbold.ttf",
+          "sha256": "bf9251269f11e4b35582a99376096deee3d0c4973a459cbd97b0bebc01f440ad"
+        }
+      ]
+    },
+    {
+      "family": "Geist (EXE fallback at pygame/freesansbold.ttf)",
+      "license": "OFL-1.1",
+      "source": "https://github.com/vercel/geist-font",
+      "license_file": "fonts/OFL-Geist.txt",
+      "files": [
+        {
+          "path": "pygame/freesansbold.ttf",
+          "sha256": "85a1c6b18a6b0a06dfe9fd4f6d6a5d4979f74ec861eaef4bc7868b5492b8a117"
+        }
+      ]
+    }
+  ],
+  "interpreter_libraries": {
+    "openssl": "OpenSSL 3.5.9 29 Sep 2026",
+    "zlib": "1.3.2",
+    "expat": "expat_2.8.3"
+  },
+  "notice_files": [
+    {
+      "path": "aubio/BUILD.json",
+      "sha256": "c353465d3fb4090b5cbe7b7509d56cfcb5f6925e007e451a2506d0d47c1b7d4d",
+      "bytes": 43869,
+      "source": "local:verified aubio build"
+    },
+    {
+      "path": "aubio/BUILD.log",
+      "sha256": "66acd8afa0e0778b81219583e44c1fe9639c6f3e22da42dcd65dde6ddb1244fa",
+      "bytes": 153089,
+      "source": "local:verified compiler commands"
+    },
+    {
+      "path": "aubio/aubio-0.4.9.tar.gz",
+      "sha256": "df1244f6c4cf5bea382c8c2d35aa43bc31f4cf631fe325ae3992c219546a4202",
+      "bytes": 479008,
+      "source": "https://files.pythonhosted.org/packages/cd/80/302d89240603e5347c7f8026c8b02c59f8dfaec66c91a743d82de7c86006/aubio-0.4.9.tar.gz"
+    },
+    {
+      "path": "aubio/build-aubio-wheel.py",
+      "sha256": "65328d60900123864f6c449c0d0623f36522c61b598392f3d7bb44e19573b56d",
+      "bytes": 4335,
+      "source": "local:verified build recipe"
+    },
+    {
+      "path": "fonts/FreeSans-embedded-metadata.json",
+      "sha256": "a9ae818be40b8d81857ba9598c7d5e47a810230818f1e3e996b718f3c6902029",
+      "bytes": 584,
+      "source": "installed:pygame/freesansbold.ttf:name-table"
+    },
+    {
+      "path": "fonts/OFL-ChakraPetch.txt",
+      "sha256": "13831d02389d917d22fcfa6c79f98f8acbf61d230add0e73a4d4dc5f3bfb9e56",
+      "bytes": 4396,
+      "source": "pickhero/assets/fonts/OFL-ChakraPetch.txt"
+    },
+    {
+      "path": "fonts/OFL-Geist.txt",
+      "sha256": "930853ee1daa68554d9e35c8a9175affb74f699fad9a5da6ee5ebe76379d9137",
+      "bytes": 4368,
+      "source": "pickhero/assets/fonts/OFL-Geist.txt"
+    },
+    {
+      "path": "fonts/OFL-HankenGrotesk.txt",
+      "sha256": "e02ccb89a86839b22feff7872ff5cc355cc0f58318d29eee20e2cf83a612f16d",
+      "bytes": 4402,
+      "source": "pickhero/assets/fonts/OFL-HankenGrotesk.txt"
+    },
+    {
+      "path": "fonts/OFL-JetBrainsMono.txt",
+      "sha256": "b2fe5e8987594e9ffd1d2ca52a2f5d73eb8335243893c5d6254b5ad69269591d",
+      "bytes": 4399,
+      "source": "pickhero/assets/fonts/OFL-JetBrainsMono.txt"
+    },
+    {
+      "path": "portaudio/.github/workflows/build-libs.yml",
+      "sha256": "a82d8497e8a33091b17689b44934c330b9c827bb1ffef5ee7ad492ced2c354db",
+      "bytes": 4035,
+      "source": "installed:sounddevice/portaudio-binaries/.github/workflows/build-libs.yml"
+    },
+    {
+      "path": "portaudio/README.md",
+      "sha256": "b3cb053566b6f38c38bdf4822e53f8f8a2a377e05c503fdd69c52e5d1c6c104c",
+      "bytes": 974,
+      "source": "installed:sounddevice/portaudio-binaries/README.md"
+    },
+    {
+      "path": "project/ORIGIN.txt",
+      "sha256": "6639b665a155ce4261a6cabc4985de89aaf7051e8e9aae9ea1f33951b07bbc0f",
+      "bytes": 349,
+      "source": "repository:README.md and read-only git history/remotes"
+    },
+    {
+      "path": "python-runtime/LICENSE.txt",
+      "sha256": "886a0ead2d89030ee62dbff52b04e47ab91998341295bb9c56fb952b4e081c7a",
+      "bytes": 25066,
+      "source": "build-interpreter:CPython-3.12.14/LICENSE"
+    },
+    {
+      "path": "python/attrs/attrs-26.1.0.dist-info/licenses/LICENSE",
+      "sha256": "882115c95dfc2af1eeb6714f8ec6d5cbcabf667caff8729f42420da63f714e9f",
+      "bytes": 1109,
+      "source": "installed:attrs==26.1.0/attrs-26.1.0.dist-info/licenses/LICENSE"
+    },
+    {
+      "path": "python/aubio/aubio-0.4.9.dist-info/licenses/AUTHORS",
+      "sha256": "dc0c6b98240b34d236ebe87b63173ed9d888af774e1dc6e9337fe1084166c7fb",
+      "bytes": 31,
+      "source": "installed:aubio==0.4.9/aubio-0.4.9.dist-info/licenses/AUTHORS"
+    },
+    {
+      "path": "python/aubio/aubio-0.4.9.dist-info/licenses/COPYING",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "bytes": 35147,
+      "source": "installed:aubio==0.4.9/aubio-0.4.9.dist-info/licenses/COPYING"
+    },
+    {
+      "path": "python/cffi/cffi-2.1.1.dist-info/licenses/LICENSE",
+      "sha256": "5ba24ddc57067f9249add644c3afc41a5d6dc37e23433ef759d95df370b0af63",
+      "bytes": 1123,
+      "source": "installed:cffi==2.1.1/cffi-2.1.1.dist-info/licenses/LICENSE"
+    },
+    {
+      "path": "python/defusedxml/defusedxml-0.7.1.dist-info/LICENSE",
+      "sha256": "b80ce9da8c42a1f91079627fbbe2bf27210ae108a0ffe5f077d5b08e076c24c8",
+      "bytes": 2409,
+      "source": "installed:defusedxml==0.7.1/defusedxml-0.7.1.dist-info/LICENSE"
+    },
+    {
+      "path": "python/numpy/numpy-2.5.3.dist-info/licenses/LICENSE.txt",
+      "sha256": "a804dff0ead9fadc5293456410bcbfc32bf024be9c4513459663fb7b442d2341",
+      "bytes": 45831,
+      "source": "installed:numpy==2.5.3/numpy-2.5.3.dist-info/licenses/LICENSE.txt"
+    },
+    {
+      "path": "python/numpy/numpy-2.5.3.dist-info/licenses/numpy/_core/include/numpy/libdivide/LICENSE.txt",
+      "sha256": "d544761558b510866c21f7e8a2d5716fca76e0b98117e3b6b86314db7244d150",
+      "bytes": 1039,
+      "source": "installed:numpy==2.5.3/numpy-2.5.3.dist-info/licenses/numpy/_core/include/numpy/libdivide/LICENSE.txt"
+    },
+    {
+      "path": "python/numpy/numpy-2.5.3.dist-info/licenses/numpy/_core/src/common/pythoncapi-compat/COPYING",
+      "sha256": "aea41976c720f91bd19725c16916a1ace40eb1ea42620d340e587a5de4bbcea0",
+      "bytes": 704,
+      "source": "installed:numpy==2.5.3/numpy-2.5.3.dist-info/licenses/numpy/_core/src/common/pythoncapi-compat/COPYING"
+    },
+    {
+      "path": "python/numpy/numpy-2.5.3.dist-info/licenses/numpy/_core/src/highway/LICENSE",
+      "sha256": "d208152e2777ffd0126eacc1bd21c0320d69e4e6b622d21a2a12a47e8ef73763",
+      "bytes": 21155,
+      "source": "installed:numpy==2.5.3/numpy-2.5.3.dist-info/licenses/numpy/_core/src/highway/LICENSE"
+    },
+    {
+      "path": "python/numpy/numpy-2.5.3.dist-info/licenses/numpy/_core/src/multiarray/dragon4_LICENSE.txt",
+      "sha256": "b0fd592d4ead563148e3977e7b589169d46a5ef2ff133c755a81af880a3fc919",
+      "bytes": 1441,
+      "source": "installed:numpy==2.5.3/numpy-2.5.3.dist-info/licenses/numpy/_core/src/multiarray/dragon4_LICENSE.txt"
+    },
+    {
+      "path": "python/numpy/numpy-2.5.3.dist-info/licenses/numpy/_core/src/npysort/x86-simd-sort/LICENSE.md",
+      "sha256": "a732977853530066790c42817087f4829b518dd98d340c916acbfd227e39d3cb",
+      "bytes": 1542,
+      "source": "installed:numpy==2.5.3/numpy-2.5.3.dist-info/licenses/numpy/_core/src/npysort/x86-simd-sort/LICENSE.md"
+    },
+    {
+      "path": "python/numpy/numpy-2.5.3.dist-info/licenses/numpy/_core/src/umath/svml/LICENSE",
+      "sha256": "585483905b13d4b42f800c55ba99e89d6e2e33ccd5f503e201c07531d148ff41",
+      "bytes": 1573,
+      "source": "installed:numpy==2.5.3/numpy-2.5.3.dist-info/licenses/numpy/_core/src/umath/svml/LICENSE"
+    },
+    {
+      "path": "python/numpy/numpy-2.5.3.dist-info/licenses/numpy/fft/pocketfft/LICENSE.md",
+      "sha256": "8db000e158c162e7249787852d8c69764706502ccee725c06641b31c1e95c8af",
+      "bytes": 1523,
+      "source": "installed:numpy==2.5.3/numpy-2.5.3.dist-info/licenses/numpy/fft/pocketfft/LICENSE.md"
+    },
+    {
+      "path": "python/numpy/numpy-2.5.3.dist-info/licenses/numpy/linalg/lapack_lite/LICENSE.txt",
+      "sha256": "19060ef465e1797d682ee0fc3081bd25ab1395e995e43d25c9d13c95d9a3cd6b",
+      "bytes": 2314,
+      "source": "installed:numpy==2.5.3/numpy-2.5.3.dist-info/licenses/numpy/linalg/lapack_lite/LICENSE.txt"
+    },
+    {
+      "path": "python/numpy/numpy-2.5.3.dist-info/licenses/numpy/ma/LICENSE",
+      "sha256": "d78dbb208b80d92b4d333e41a4baae50d12444f46e53199fa7726a91de6e2da7",
+      "bytes": 1616,
+      "source": "installed:numpy==2.5.3/numpy-2.5.3.dist-info/licenses/numpy/ma/LICENSE"
+    },
+    {
+      "path": "python/numpy/numpy-2.5.3.dist-info/licenses/numpy/random/LICENSE.md",
+      "sha256": "b4bc2f4fa1c95778f1ed3dd8f14706bece399475b978f9f34b5d3cd72521b48a",
+      "bytes": 3582,
+      "source": "installed:numpy==2.5.3/numpy-2.5.3.dist-info/licenses/numpy/random/LICENSE.md"
+    },
+    {
+      "path": "python/numpy/numpy-2.5.3.dist-info/licenses/numpy/random/src/distributions/LICENSE.md",
+      "sha256": "cf5619f25b112d5ce7c896efffc8e610bcb345dfadcc19f2c1460aa48fff2c9e",
+      "bytes": 2805,
+      "source": "installed:numpy==2.5.3/numpy-2.5.3.dist-info/licenses/numpy/random/src/distributions/LICENSE.md"
+    },
+    {
+      "path": "python/numpy/numpy-2.5.3.dist-info/licenses/numpy/random/src/mt19937/LICENSE.md",
+      "sha256": "92c10699884321f1c2947fe2a70ab23b0fbf1507f756d89dd08f38c61fc3d4fa",
+      "bytes": 2986,
+      "source": "installed:numpy==2.5.3/numpy-2.5.3.dist-info/licenses/numpy/random/src/mt19937/LICENSE.md"
+    },
+    {
+      "path": "python/numpy/numpy-2.5.3.dist-info/licenses/numpy/random/src/pcg64/LICENSE.md",
+      "sha256": "41190663b77bee5302386495a07b7eabfbfa571aa0ae2f11da6764162062fc4f",
+      "bytes": 1176,
+      "source": "installed:numpy==2.5.3/numpy-2.5.3.dist-info/licenses/numpy/random/src/pcg64/LICENSE.md"
+    },
+    {
+      "path": "python/numpy/numpy-2.5.3.dist-info/licenses/numpy/random/src/philox/LICENSE.md",
+      "sha256": "322ac46d870c8aeead6c53adcccc839296fb3c8e456eae155081297daf7f8013",
+      "bytes": 1540,
+      "source": "installed:numpy==2.5.3/numpy-2.5.3.dist-info/licenses/numpy/random/src/philox/LICENSE.md"
+    },
+    {
+      "path": "python/numpy/numpy-2.5.3.dist-info/licenses/numpy/random/src/sfc64/LICENSE.md",
+      "sha256": "28cad82ce1379dc529df30da78ec012d7d0d1d576b03ddcb93388aee53659f59",
+      "bytes": 1253,
+      "source": "installed:numpy==2.5.3/numpy-2.5.3.dist-info/licenses/numpy/random/src/sfc64/LICENSE.md"
+    },
+    {
+      "path": "python/numpy/numpy-2.5.3.dist-info/licenses/numpy/random/src/splitmix64/LICENSE.md",
+      "sha256": "454ec7350e478e037061850b67395753b425b1cb0a34bbc26290b020bf89d763",
+      "bytes": 340,
+      "source": "installed:numpy==2.5.3/numpy-2.5.3.dist-info/licenses/numpy/random/src/splitmix64/LICENSE.md"
+    },
+    {
+      "path": "python/numpy/numpy/_core/include/numpy/random/LICENSE.txt",
+      "sha256": "d544761558b510866c21f7e8a2d5716fca76e0b98117e3b6b86314db7244d150",
+      "bytes": 1039,
+      "source": "installed:numpy==2.5.3/numpy/_core/include/numpy/random/LICENSE.txt"
+    },
+    {
+      "path": "python/numpy/numpy/ma/LICENSE",
+      "sha256": "d78dbb208b80d92b4d333e41a4baae50d12444f46e53199fa7726a91de6e2da7",
+      "bytes": 1616,
+      "source": "installed:numpy==2.5.3/numpy/ma/LICENSE"
+    },
+    {
+      "path": "python/numpy/numpy/random/LICENSE.md",
+      "sha256": "b4bc2f4fa1c95778f1ed3dd8f14706bece399475b978f9f34b5d3cd72521b48a",
+      "bytes": 3582,
+      "source": "installed:numpy==2.5.3/numpy/random/LICENSE.md"
+    },
+    {
+      "path": "python/pygame/LGPL.txt",
+      "sha256": "a190dc9c8043755d90f8b0a75fa66b9e42d4af4c980bf5ddc633f0124db3cee7",
+      "bytes": 26430,
+      "source": "installed:pygame/docs/generated/LGPL.txt"
+    },
+    {
+      "path": "python/pyguitarpro/pyguitarpro-0.11.dist-info/licenses/LICENSE",
+      "sha256": "8e1c608ff068dae9f02ca7ed877d310f4877376f20b8458ab568152297031efc",
+      "bytes": 7651,
+      "source": "installed:PyGuitarPro==0.11/pyguitarpro-0.11.dist-info/licenses/LICENSE"
+    },
+    {
+      "path": "python/pyinstaller/pyinstaller-6.22.3.dist-info/licenses/COPYING.txt",
+      "sha256": "0598064c7d2718e38d7914a7d08343b2fa008e3bea9ebba2aa7a6ffa5900dd64",
+      "bytes": 32604,
+      "source": "installed:pyinstaller==6.22.3/pyinstaller-6.22.3.dist-info/licenses/COPYING.txt"
+    },
+    {
+      "path": "python/sounddevice/sounddevice-0.5.6.dist-info/licenses/LICENSE",
+      "sha256": "b6eea21bbafbaf7a2177e492f1be6b5efc6f4e708b1980773de51cdaa52f8211",
+      "bytes": 1063,
+      "source": "installed:sounddevice==0.5.6/sounddevice-0.5.6.dist-info/licenses/LICENSE"
+    },
+    {
+      "path": "upstream/expat/COPYING.txt",
+      "sha256": "31b15de82aa19a845156169a17a5488bf597e561b2c318d159ed583139b25e87",
+      "bytes": 1144,
+      "source": "https://raw.githubusercontent.com/libexpat/libexpat/R_2_8_3/expat/COPYING"
+    },
+    {
+      "path": "upstream/freefont/GPL-2.0.txt",
+      "sha256": "edaef632cbb643e4e7a221717a6c441a4c1a7c918e6e4d56debc3d8739b233f6",
+      "bytes": 17984,
+      "source": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt"
+    },
+    {
+      "path": "upstream/libffi/LICENSE-reference.txt",
+      "sha256": "2c9c2acb9743e6b007b91350475308aee44691d96aa20eacef8e199988c8c388",
+      "bytes": 1132,
+      "source": "https://raw.githubusercontent.com/libffi/libffi/v3.4.4/LICENSE"
+    },
+    {
+      "path": "upstream/openssl/LICENSE.txt",
+      "sha256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a",
+      "bytes": 10175,
+      "source": "https://raw.githubusercontent.com/openssl/openssl/openssl-3.5.9/LICENSE.txt"
+    },
+    {
+      "path": "upstream/portaudio/LICENSE.txt",
+      "sha256": "ec52a1952d701f94e5135719a47376da4ee0b4a0201f1cafb49f61db6480ac3d",
+      "bytes": 3524,
+      "source": "https://raw.githubusercontent.com/PortAudio/portaudio/v19.7.0/LICENSE.txt"
+    },
+    {
+      "path": "upstream/pygame-native/LICENSE.FLAC.txt",
+      "sha256": "349b7bdbf2de10e1303fc3e8aa81f944fd2832fe40270e1b805e20b1b131187c",
+      "bytes": 1522,
+      "source": "https://raw.githubusercontent.com/pygame/pygame/2.6.1/docs/licenses/LICENSE.FLAC.txt"
+    },
+    {
+      "path": "upstream/pygame-native/LICENSE.fluidsynth.txt",
+      "sha256": "9b872a8a070b8ad329c4bd380fb1bf0000f564c75023ec8e1e6803f15364b9e9",
+      "bytes": 26461,
+      "source": "https://raw.githubusercontent.com/pygame/pygame/2.6.1/docs/licenses/LICENSE.fluidsynth.txt"
+    },
+    {
+      "path": "upstream/pygame-native/LICENSE.freetype.txt",
+      "sha256": "650737ec7589c35600de73b0db88dafb314f7e32e7e3cf38d0c87ceb1a7ed31b",
+      "bytes": 6912,
+      "source": "https://raw.githubusercontent.com/pygame/pygame/2.6.1/docs/licenses/LICENSE.freetype.txt"
+    },
+    {
+      "path": "upstream/pygame-native/LICENSE.jpeg.txt",
+      "sha256": "2899a194cc43af0cfbeff33cdecfad20de8bbf784155b0cd0217d27c37609a28",
+      "bytes": 3021,
+      "source": "https://raw.githubusercontent.com/pygame/pygame/2.6.1/docs/licenses/LICENSE.jpeg.txt"
+    },
+    {
+      "path": "upstream/pygame-native/LICENSE.modplug.txt",
+      "sha256": "b64d05522976d26e870bfbbf701e5a89cc5e2ab8fbde677e24f07ddaf0dac7c1",
+      "bytes": 59,
+      "source": "https://raw.githubusercontent.com/pygame/pygame/2.6.1/docs/licenses/LICENSE.modplug.txt"
+    },
+    {
+      "path": "upstream/pygame-native/LICENSE.mpg123.txt",
+      "sha256": "892cd7e1c0b23374c8a82c244f64c30297c1feada0143cfdd9f6a25f445b0dd6",
+      "bytes": 41488,
+      "source": "https://raw.githubusercontent.com/pygame/pygame/2.6.1/docs/licenses/LICENSE.mpg123.txt"
+    },
+    {
+      "path": "upstream/pygame-native/LICENSE.numpy.txt",
+      "sha256": "faaa516b85dbf609b0296918d61924e3145c9d2b8d91ea5be93e7ba073a78aa1",
+      "bytes": 1543,
+      "source": "https://raw.githubusercontent.com/pygame/pygame/2.6.1/docs/licenses/LICENSE.numpy.txt"
+    },
+    {
+      "path": "upstream/pygame-native/LICENSE.ogg-vorbis.txt",
+      "sha256": "776b6f6ab87afa263d534ad4061b6180149de0fed90e2e18e1592992922327ce",
+      "bytes": 1498,
+      "source": "https://raw.githubusercontent.com/pygame/pygame/2.6.1/docs/licenses/LICENSE.ogg-vorbis.txt"
+    },
+    {
+      "path": "upstream/pygame-native/LICENSE.opus.txt",
+      "sha256": "fde149f902d124a8c02a218527c440ee2fab6884323f180061b1405fb06af60e",
+      "bytes": 1972,
+      "source": "https://raw.githubusercontent.com/pygame/pygame/2.6.1/docs/licenses/LICENSE.opus.txt"
+    },
+    {
+      "path": "upstream/pygame-native/LICENSE.opusfile.txt",
+      "sha256": "54e125c8250361407b34322e0f328f6bdf7fd30cd4f2941a321e47b41f9c159d",
+      "bytes": 1515,
+      "source": "https://raw.githubusercontent.com/pygame/pygame/2.6.1/docs/licenses/LICENSE.opusfile.txt"
+    },
+    {
+      "path": "upstream/pygame-native/LICENSE.png.txt",
+      "sha256": "0ad3bfee8be10e5519949e7af492e36bc349376b75fbeb412229a5967e3e9434",
+      "bytes": 5479,
+      "source": "https://raw.githubusercontent.com/pygame/pygame/2.6.1/docs/licenses/LICENSE.png.txt"
+    },
+    {
+      "path": "upstream/pygame-native/LICENSE.portmidi.txt",
+      "sha256": "eb5d0724b2ae76a94ae804c44b3d6cfaaca822b7d42907aefa9256cb93db6fe0",
+      "bytes": 11342,
+      "source": "https://raw.githubusercontent.com/pygame/pygame/2.6.1/docs/licenses/LICENSE.portmidi.txt"
+    },
+    {
+      "path": "upstream/pygame-native/LICENSE.sdl2.txt",
+      "sha256": "ae4df3759a726538607b84c00ab8f8a5567d9f38ad5397486eb9b5c5f626caef",
+      "bytes": 930,
+      "source": "https://raw.githubusercontent.com/pygame/pygame/2.6.1/docs/licenses/LICENSE.sdl2.txt"
+    },
+    {
+      "path": "upstream/pygame-native/LICENSE.sdl2_image.txt",
+      "sha256": "45079362e2230154205413a6940544ca94e3479ccf76205c71c4f542a6815d25",
+      "bytes": 996,
+      "source": "https://raw.githubusercontent.com/pygame/pygame/2.6.1/docs/licenses/LICENSE.sdl2_image.txt"
+    },
+    {
+      "path": "upstream/pygame-native/LICENSE.sdl2_mixer.txt",
+      "sha256": "113727180e7956cb9718b03b41da85b63ea54743a33047071a623bf672895a10",
+      "bytes": 994,
+      "source": "https://raw.githubusercontent.com/pygame/pygame/2.6.1/docs/licenses/LICENSE.sdl2_mixer.txt"
+    },
+    {
+      "path": "upstream/pygame-native/LICENSE.sdl_gfx.txt",
+      "sha256": "63744690fa28ecf2a9dedacafb08d1209031e7eff1820430d952264f678a1bcf",
+      "bytes": 191,
+      "source": "https://raw.githubusercontent.com/pygame/pygame/2.6.1/docs/licenses/LICENSE.sdl_gfx.txt"
+    },
+    {
+      "path": "upstream/pygame-native/LICENSE.sse2neon-h.txt",
+      "sha256": "ada11c843d252c0b70837629ac7a54a525ecb7d8c0932ebccf863c55dbd32cb1",
+      "bytes": 1832,
+      "source": "https://raw.githubusercontent.com/pygame/pygame/2.6.1/docs/licenses/LICENSE.sse2neon-h.txt"
+    },
+    {
+      "path": "upstream/pygame-native/LICENSE.tiff.txt",
+      "sha256": "8eeab3915f97f6f7b62a8008bf77e7ac3bfbb034b04d93cd63aafa10b2dd6614",
+      "bytes": 1160,
+      "source": "https://raw.githubusercontent.com/pygame/pygame/2.6.1/docs/licenses/LICENSE.tiff.txt"
+    },
+    {
+      "path": "upstream/pygame-native/LICENSE.webp.txt",
+      "sha256": "17c029a902ad45a199dfe8e3a1c39305ab28d302b0703360c4a27351a4673dcb",
+      "bytes": 1526,
+      "source": "https://raw.githubusercontent.com/pygame/pygame/2.6.1/docs/licenses/LICENSE.webp.txt"
+    },
+    {
+      "path": "upstream/pygame-native/LICENSE.zlib.txt",
+      "sha256": "31010e0bc26df3001c7bb3c1b7a7094a8972bf6d37a5d0c59d3d3c98fbfaf463",
+      "bytes": 1562,
+      "source": "https://raw.githubusercontent.com/pygame/pygame/2.6.1/docs/licenses/LICENSE.zlib.txt"
+    },
+    {
+      "path": "upstream/sdl-ttf/LICENSE.txt",
+      "sha256": "28aabfed22b3cb0b7e23ef40385e4f66297c960082f029c96d073cc1d4e008d5",
+      "bytes": 878,
+      "source": "https://raw.githubusercontent.com/libsdl-org/SDL_ttf/release-2.20.1/LICENSE.txt"
+    },
+    {
+      "path": "upstream/zlib-python/LICENSE.txt",
+      "sha256": "e32ff4e00d9d94930537635291da39e7e612703334bf6fde8c7f1686fe8a45a2",
+      "bytes": 1002,
+      "source": "https://raw.githubusercontent.com/madler/zlib/v1.3.2/LICENSE"
+    }
+  ],
+  "open_items": [
+    "LGPL-Bibliotheken (pygame, PyGuitarPro): Quellbereitstellung, Austauschbarkeit und passende Build-Unterlagen sind vor externer Veröffentlichung zu vervollständigen; Notices allein sind keine Freigabe.",
+    "Einige native pygame-Unterbibliotheken haben keine verifizierte genaue Build-Version. Die authentischen Abhängigkeitsnotices stammen aus pygame 2.6.1; statisch eingebettete Komponenten sind nicht vollständig zugeordnet.",
+    "libffi-8.dll: genaue Build-Version unbekannt; mitgelieferter MIT-Text von 3.4.4 ist ausdrücklich nur eine Upstream-Referenz.",
+    "OpenSSL-/Expat-/Python-zlib-Texte sind auf 3.5.9 / 2.8.3 / 1.3.2 festgelegt. Bei anderem Build-Interpreter müssen diese Quelltexte/Zuordnungen überprüft werden.",
+    "ASIO: Exakte SDK-Version und zugehörige Bedingungen sind für die vorhandene x64-Binärdatei weiter offen. Die x64-Unterstützung bleibt erhalten. Nicht benötigte 32-bit- und ARM64-DLLs werden durch die Build-Regel ausgeschlossen; der Archivprüfer muss das bestätigen."
+  ],
+  "bundle_policy": {
+    "fallback_font": "Unmodified Geist-Regular.ttf replaces pygame/freesansbold.ttf in the EXE; OFL notice included.",
+    "portaudio": "Windows x64 standard and ASIO backends retained; x86 and ARM64 excluded.",
+    "aubio_source_and_recipe_verified": true
+  },
+  "reachability": {
+    "pygame_media": "Bundled fonts / trusted assets; no user GP/MIDI import path through SDL_image/SDL_mixer found in current app.",
+    "imports": "User GP ZIP imports use Python zipfile and Python zlib; MIDI is parsed by application code. Does not use pygame zlib1.dll.",
+    "limits": "Old DLL versions alone do not prove an exploitable application vulnerability. No hardware or active exploit test performed."
+  }
+}

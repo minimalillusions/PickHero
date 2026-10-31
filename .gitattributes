@@ -1,0 +1,8 @@
+# Files whose SHA-256 is recorded -- in licenses/manifest.json and in
+# wheels/aubio-build.json -- are stored byte for byte. A line-ending
+# conversion on checkout changes their bytes and breaks every recorded hash,
+# so a fresh clone on Windows failed its own self-test while the original
+# working copy passed.
+licenses/** -text
+wheels/** -text
+scripts/build-aubio-wheel.py -text

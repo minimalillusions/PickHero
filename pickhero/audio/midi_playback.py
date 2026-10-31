@@ -7,7 +7,9 @@ existing playback clock. No audio files or temp files needed.
 from __future__ import annotations
 
 import bisect
-from dataclasses import dataclass, field
+from dataclasses import dataclass
+
+from pickhero.config import log_error
 
 
 # MIDI status bytes
@@ -86,31 +88,37 @@ class MidiPlayer:
 
         Returns True on success, False if MIDI is unavailable.
         """
+        if self._output is not None:
+            return True
         try:
             import pygame.midi
             pygame.midi.init()
+            self._opened = True
             device_id = pygame.midi.get_default_output_id()
             if device_id == -1:
-                print("No MIDI output device found")
+                log_error("No MIDI output device found")
+                self.close()
                 return False
             self._output = pygame.midi.Output(device_id)
-            self._opened = True
             return True
         except Exception as e:
-            print(f"MIDI init failed: {e}")
+            log_error(f"MIDI init failed: {e}")
+            self.close()
             return False
 
     def play_click(self, velocity: int = 100) -> None:
         """Play a single metronome click on the MIDI percussion channel.
 
-        Uses channel 9 (percussion), note 76 (hi wood block).
+        Uses channel 9 (percussion), note 76 (hi wood block). The caller
+        controls metronome/count-in enablement independently of backing mute.
         """
-        if self._output is None or self._muted:
+        if self._output is None:
             return
         try:
             self._output.write_short(NOTE_ON | 9, 76, velocity)
-        except Exception:
-            pass
+        except Exception as exc:
+            log_error(f"MIDI click failed: {exc}")
+            self.close()
 
     def update(self, playback_ms: float) -> None:
         """Fire all events up to playback_ms. Called each frame."""
@@ -118,25 +126,37 @@ class MidiPlayer:
         if not events or self._output is None:
             return
         for event in events:
-            self._dispatch(event)
+            try:
+                self._dispatch(event)
+            except Exception as exc:
+                log_error(f"MIDI playback failed: {exc}")
+                self.close()
+                break
 
     def seek(self, time_ms: float) -> None:
         """Silence all notes, reset cursor, re-send program changes."""
         self._all_notes_off()
         self._track.seek(time_ms)
         # Re-send instrument assignments so the right sounds play
-        if self._output is not None and not self._muted:
-            for pc in self._track.get_program_changes_before(time_ms):
-                self._output.write_short(
-                    PROGRAM_CHANGE | pc.channel, pc.data1, 0
-                )
+        if self._output is not None:
+            try:
+                for pc in self._track.get_program_changes_before(time_ms):
+                    self._output.write_short(
+                        PROGRAM_CHANGE | pc.channel, pc.data1, 0
+                    )
+            except Exception as exc:
+                log_error(f"MIDI seek failed: {exc}")
+                self.close()
 
     def pause(self) -> None:
         """Silence all active notes."""
         self._all_notes_off()
 
     def set_muted(self, muted: bool) -> None:
-        """Toggle output. When muted, cursor still advances to avoid burst on unmute."""
+        """Mute backing notes, leaving metronome/count-in clicks available.
+
+        The cursor still advances while muted to avoid a burst on unmute.
+        """
         if muted and not self._muted:
             self._all_notes_off()
         self._muted = muted
@@ -165,8 +185,8 @@ class MidiPlayer:
     def _dispatch(self, event: MidiEvent) -> None:
         """Send a single MIDI event to the output."""
         if event.event_type == NOTE_ON:
-            self._active_notes.add((event.channel, event.data1))
             if not self._muted and self._output is not None:
+                self._active_notes.add((event.channel, event.data1))
                 self._output.write_short(
                     NOTE_ON | event.channel, event.data1, event.data2
                 )
@@ -177,7 +197,9 @@ class MidiPlayer:
                     NOTE_OFF | event.channel, event.data1, event.data2
                 )
         elif event.event_type == PROGRAM_CHANGE:
-            if not self._muted and self._output is not None:
+            # Instrument changes are silent. Keep them up to date while the
+            # backing is muted so unmuting uses the current instrument.
+            if self._output is not None:
                 self._output.write_short(
                     PROGRAM_CHANGE | event.channel, event.data1, 0
                 )
@@ -185,6 +207,7 @@ class MidiPlayer:
     def _all_notes_off(self) -> None:
         """Send note-off for all tracked active notes, then CC123 on all channels."""
         if self._output is None:
+            self._active_notes.clear()
             return
         # Explicit note-off for tracked notes
         for channel, note in list(self._active_notes):
