@@ -3,7 +3,7 @@
 These compositions use explicit pitches and rests, not detector test data.
 Files have separate stable identities; only unchanged music inherits history.
 
-The known pieces are all in the public domain -- Beethoven, Grieg, a
+The known pieces are all in the public domain -- Pachelbel, Grieg, a
 traditional hymn and the boogie figure, which belongs to nobody -- so that
 a beginner can say what the player is playing. The melodies are written from
 published scores, not from memory, and transposed into first position.
@@ -34,7 +34,7 @@ class Piece:
     style: str
     section_bars: tuple[int, ...] = ()
     # Somebody else's music. The library prints the artist under every
-    # title, and Beethoven is not a PickHero practice piece.
+    # title, and Pachelbel is not a PickHero practice piece.
     known: bool = False
 
     @property
@@ -50,7 +50,7 @@ class Piece:
 PIECES = (Piece("night_drive", 72, "rock"), Piece("sunday_blues", 72, "blues"),
           Piece("little_journey", 68, "melody"),
           Piece("evening_walk", 80, "groove", (0, 4, 8)),
-          Piece("ode_to_joy", 80, "melody", known=True),
+          Piece("canon", 72, "groove", known=True),
           Piece("saints", 96, "melody", known=True),
           Piece("boogie", 84, "blues", known=True),
           Piece("mountain_king", 76, "melody", known=True))
@@ -130,8 +130,9 @@ def _patterns(slug, version):
                 [(5, 4), (7, 4), (10, 2)], [(12, 2), (10, 4), (7, 4)],
                 [(10, 4), (7, 4), (5, 2)], [(7, 4), (5, 4), (3, 2)],
                 [(5, 4), (3, 4), (0, 2)], [(0, 2), (None, 2)]]
-    # The known pieces. Sources: Ode to Joy from the LilyPond score in
-    # Wikipedia's article, When the Saints from the ABC score in the German
+    # The known pieces. Sources: Pachelbel's Canon from the LilyPond score
+    # in Wikipedia's article (the cello's ground and the first violin's
+    # entry), When the Saints from the ABC score in the German
     # article, the Mountain King theme from the first score excerpt in
     # Wikipedia's article on it.
     #
@@ -139,30 +140,28 @@ def _patterns(slug, version):
     # plain note followed by a rest of the dot's length. The strike lands
     # exactly where the score puts it -- which is what gets scored -- and the
     # string rings on through the rest anyway.
-    if slug == "ode_to_joy":
-        # C major in first position: G1=3 C2=8 D2=10 E2=12 F2=13 G2=15.
-        rise = [(12, 4), (12, 4), (13, 4), (15, 4)]     # E E F G
-        fall = [(15, 4), (13, 4), (12, 4), (10, 4)]     # G F E D
-        climb = [(8, 4), (8, 4), (10, 4), (12, 4)]     # C C D E
+    if slug == "canon":
+        # F major rather than Pachelbel's D: the key in which the ground keeps
+        # its exact shape -- every leap a fourth, as the cello plays it -- and
+        # both it and the first violin's entry lie in the first three frets.
+        # In D or C one note of the ground would have to jump an octave.
+        # F1=1 G1=3 A1=5 A#1=6 C2=8 D2=10 E2=12 F2=13 G2=15 A2=17.
         if version == "start":
-            # The two lines everybody knows, the dotted cadences evened out
-            # to quarter, quarter, half.
-            tune = [rise, fall, climb, [(12, 4), (10, 4), (10, 2)],
-                    rise, fall, climb, [(10, 4), (8, 4), (8, 2)]]
-            return [list(bar) for bar in tune]
-        half_close = [(12, 4), (None, 8), (10, 8), (10, 2)]   # E. D D
-        full_close = [(10, 4), (None, 8), (8, 8), (8, 2)]     # D. C C
-        tune = [rise, fall, climb, half_close, rise, fall, climb, full_close,
-                [(10, 4), (10, 4), (12, 4), (8, 4)],             # D D E C
-                [(10, 4), (12, 8), (13, 8), (12, 4), (8, 4)],    # D E F E C
-                [(10, 4), (12, 8), (13, 8), (12, 4), (10, 4)],   # D E F E D
-                # C D G and the E that comes a beat early. The score ties it
-                # over the bar line; here it is struck on four and held
-                # through the rest that opens the next bar.
-                [(8, 4), (10, 4), (3, 4), (12, 4)],
-                [(None, 4), (12, 4), (13, 4), (15, 4)],
-                fall, climb, full_close]
-        return [list(bar) for bar in tune]
+            # Every value doubled: the eight notes at the pace of a
+            # procession, twice round, and home on F.
+            slow = [[(13, 2), (8, 2)], [(10, 2), (5, 2)],      # F C D A
+                    [(6, 2), (1, 2)], [(6, 2), (8, 2)]]        # Bb F Bb C
+            return [list(bar) for bar in slow + slow] + [[(13, 1)]]
+        # Pachelbel's own quarters: twice round alone, the way the cello
+        # opens the piece, then the line the first violin enters with, the
+        # ground once more, and home.
+        ground = [[(13, 4), (8, 4), (10, 4), (5, 4)],          # F C D A
+                  [(6, 4), (1, 4), (6, 4), (8, 4)]]            # Bb F Bb C
+        violin = [[(17, 4), (15, 4), (13, 4), (12, 4)],        # A G F E
+                  [(10, 4), (8, 4), (10, 4), (12, 4)],         # D C D E
+                  [(13, 4), (12, 4), (10, 4), (8, 4)],         # F E D C
+                  [(6, 4), (5, 4), (6, 4), (3, 4)]]            # Bb A Bb G
+        return [list(bar) for bar in ground + ground + violin + ground] + [[(13, 1)]]
     if slug == "saints":
         # C major: C2=8 D2=10 E2=12 F2=13 G2=15. The source is in 2/4.
         if version == "start":
@@ -315,6 +314,32 @@ def _atomic_bytes(path, data):
             temporary.unlink(missing_ok=True)
 
 
+def _retire_music(folder, owned):
+    """Remove the generated files of pieces that left the catalogue.
+
+    Only a file that still has the digest it was written with goes, so a
+    version the player changed stays, and so does anything that is not ours.
+    """
+    current = {piece.filename(version) for piece in PIECES for version in VERSIONS}
+    retired = False
+    for name in sorted(set(owned) - current):
+        if Path(name).name != name or not (name.startswith("ph_") and name.endswith(".gp5")):
+            continue
+        path = folder/name
+        try:
+            unchanged = hashlib.sha256(path.read_bytes()).hexdigest() == owned[name]
+        except FileNotFoundError:
+            unchanged = True
+        except OSError:
+            continue
+        if not unchanged:
+            continue
+        path.unlink(missing_ok=True)
+        del owned[name]
+        retired = True
+    return retired
+
+
 def ensure_music(instrument, songs_dir, progress=None):
     """Create only owned files, preserving user edits and equivalent history."""
     from pickhero.library import content_identity
@@ -328,6 +353,9 @@ def ensure_music(instrument, songs_dir, progress=None):
     except (OSError, ValueError):
         owned = {}
     changed = False
+    if _retire_music(folder, owned):
+        _atomic_bytes(marker, json.dumps(owned, sort_keys=True).encode("utf-8"))
+        changed = True
     for piece in PIECES:
         for version in VERSIONS:
             path = folder/piece.filename(version)

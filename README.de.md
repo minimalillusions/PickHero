@@ -15,7 +15,7 @@ Kostenlos, offline, für Windows. [English](README.md)
 - **Timing für sich:** ein zu früh gespielter Ton zählt trotzdem als gefunden; das Timing steht daneben, es wird nicht abgezogen.
 - **Gitarre, Bass-Gitarre und Bass-Ukulele**, dazu jede Stimmung, die eine Tab-Datei mitbringt.
 - **Ein Lernpfad** aus zehn kurzen Lektionen und acht Stücke zum Spielen — darunter
-  *Ode an die Freude*, *When the Saints Go Marching In* und *In der Halle des Bergkönigs* —
+  *Pachelbels Kanon*, *When the Saints Go Marching In* und *In der Halle des Bergkönigs* —
   jeweils in einer leichten und einer ausgebauten Fassung.
 - **Eigene Tabs:** Guitar Pro 3, 4, 5, 7 und 8 sowie MIDI, mit Hörprobe vor dem Spielen.
 - **Übungshilfen:** bis auf 25 % verlangsamen, Abschnitte wiederholen, auf den richtigen Ton warten,

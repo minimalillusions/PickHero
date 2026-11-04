@@ -47,7 +47,7 @@ def test_no_character_can_take_the_frame_down(name, tracking):
 
 
 def test_printable_keeps_ordinary_text_untouched():
-    for value in ("Ode an die Freude", "Größe · 9/26", "In der Halle des Bergkönigs"):
+    for value in ("Pachelbels Kanon", "Größe · 9/26", "In der Halle des Bergkönigs"):
         assert design.printable(value) is value or design.printable(value) == value
 
 

@@ -1,8 +1,9 @@
 """Known pieces must be the pieces, note for note, and playable in first position.
 
 The oracle for each melody is its published source, copied here in the
-source's own key and spelling: Ode to Joy from the LilyPond score in
-Wikipedia's article (G major), When the Saints from the ABC score in the
+source's own key and spelling: Pachelbel's Canon from the LilyPond score in
+Wikipedia's article (D major: the cello's ground and the first violin's
+entry), When the Saints from the ABC score in the
 German article (C major), the Mountain King theme from the first score
 excerpt in Wikipedia's article (B minor). The test transposes the source, not
 the other way round, so a wrong note in music.py cannot be "fixed" by quietly
@@ -21,7 +22,7 @@ from pickhero.music import PIECES, VERSIONS, build_music, music_song
 # Named here, not derived from Piece.known: a list built from the flag would
 # quietly shrink if the flag were lost, and every test below would pass by
 # testing less.
-KNOWN_SLUGS = ("ode_to_joy", "saints", "boogie", "mountain_king")
+KNOWN_SLUGS = ("canon", "saints", "boogie", "mountain_king")
 KNOWN = [p for p in PIECES if p.slug in KNOWN_SLUGS]
 PITCH = {"C": 0, "C#": 1, "D": 2, "D#": 3, "E": 4, "E#": 5, "F": 5, "F#": 6,
          "G": 7, "G#": 8, "A": 9, "A#": 10, "B": 11}
@@ -48,26 +49,45 @@ def classes(names, shift):
     return [(PITCH[name] + shift) % 12 for name in names.split()]
 
 
-# Struck notes only. In Ode to Joy bar 13 the first B is the tail of a tie and
-# is not played again.
-ODE_IN_G = (
-    "B B C D  D C B A  G G A B  B A A "
-    "B B C D  D C B A  G G A B  A G G "
-    "A A B G  A B C B G  A B C B A  G A D B "
-    "B C D  D C B A  G G A B  A G G")
+# The Canon as the score writes it: the cello's two-bar ground, and the line
+# the first violin enters with. The cello's own steps, note to note, are its
+# shape: every leap a fourth.
+CANON_GROUND_IN_D = "D A B F#  G D G A"
+CANON_VIOLIN_IN_D = "F# E D C#  B A B C#  D C# B A  G F# G E"
+CANON_GROUND_STEPS = (-5, 2, -5, 1, -5, 5, 2)
 SAINTS_IN_C = ("C E F G  C E F G  C E F G E C E D  "
                "E E D C  E G G F  E F G E C D C")
 MOUNTAIN_KING_IN_B_MINOR = ("B C# D E F# D F#  E# C# E# E C E  "
                             "B C# D E F# D F# B  A F# D F# A")
 
 
-def test_ode_to_joy_is_beethovens_tune():
-    """Source in G major; here in C, a fourth up."""
-    played = [pitch % 12 for _, pitch in struck("ode_to_joy", "groove")]
-    assert played == classes(ODE_IN_G, 5)
-    # The start version is its first two lines: the same thirty notes.
-    start = [pitch % 12 for _, pitch in struck("ode_to_joy", "start")]
-    assert start == classes(ODE_IN_G, 5)[:30]
+def test_the_canon_is_pachelbels_ground_and_first_violin():
+    """Source in D major; here in F, a minor third up, ending home on F."""
+    ground = classes(CANON_GROUND_IN_D, 3)
+    violin = classes(CANON_VIOLIN_IN_D, 3)
+    home = classes("D", 3)
+    assert [p % 12 for _, p in struck("canon", "start")] == ground * 2 + home
+    assert [p % 12 for _, p in struck("canon", "groove")] == ground * 2 + violin + ground + home
+
+
+def test_the_canon_ground_keeps_the_cellos_shape_on_every_instrument():
+    """Every leap a fourth, as the cello plays it: no note in another octave.
+
+    In D or C one note of the ground would have to jump an octave to fit the
+    first three frets above the lowest string. A bass line is recognised by
+    its shape, so the shape is what this checks.
+    """
+    for instrument in (BASS_UKULELE, GUITAR, BASS_GUITAR):
+        for version in VERSIONS:
+            pitches = [p for _, p in struck("canon", version, instrument)][:8]
+            steps = tuple(b - a for a, b in zip(pitches, pitches[1:]))
+            assert steps == CANON_GROUND_STEPS, (instrument.key, version)
+
+
+def test_the_canon_start_is_its_ground_at_half_speed():
+    start = struck("canon", "start")
+    groove = struck("canon", "groove")
+    assert [(2 * beat, p) for beat, p in groove[:16]] == start[:16]
 
 
 def test_when_the_saints_has_all_three_rising_calls():
@@ -115,28 +135,17 @@ def test_start_is_the_same_tune_at_half_speed(slug):
 
 
 def test_a_dot_is_a_rest_that_keeps_the_strike_where_the_score_puts_it():
-    """E-dot D D: the D falls on the and of two, not on two.
-
-    A dotted quarter written as a quarter plus an eighth rest strikes at
+    """A dotted quarter written as a quarter plus an eighth rest strikes at
     exactly the same moment, and that moment is what gets scored.
+
+    When the Saints, bar 6 of the groove: G F-dot, so nothing on beat 3.5.
     """
-    notes = struck("ode_to_joy", "groove")
-    bar_four = [(beat - 12, p % 12) for beat, p in notes if 12 <= beat < 16]
-    assert bar_four == [(0.0, 4), (1.5, 2), (2.0, 2)]
-    # When the Saints, bar 6 of the groove: G F-dot, so nothing on beat 3.5.
     bar_six = [beat - 20 for beat, _ in notes_in("saints", "groove", 20, 24)]
     assert bar_six == [0.0, 1.0, 2.0, 2.5]
 
 
 def notes_in(slug, version, start, end):
     return [(b, p) for b, p in struck(slug, version) if start <= b < end]
-
-
-def test_the_ode_anticipation_is_struck_on_four_and_not_again():
-    """The tied E: played at the end of bar 12, silent on the next downbeat."""
-    notes = struck("ode_to_joy", "groove")
-    beats = {beat for beat, _ in notes}
-    assert 47.0 in beats and 48.0 not in beats
 
 
 @pytest.mark.parametrize("p", KNOWN, ids=lambda p: p.slug)

@@ -15,7 +15,7 @@ Free, offline, for Windows. [Deutsch](README.de.md)
 - **Timing on its own:** a note played early still counts as found; timing is shown beside it, not taken off it.
 - **Guitar, bass guitar and bass ukulele**, plus any tuning a tab file brings along.
 - **A learning path** of ten short lessons, and eight pieces to play — among them
-  *Ode to Joy*, *When the Saints Go Marching In* and *In the Hall of the Mountain King* —
+  *Pachelbel's Canon*, *When the Saints Go Marching In* and *In the Hall of the Mountain King* —
   each in an easy and a fuller version.
 - **Your own tabs:** Guitar Pro 3, 4, 5, 7 and 8, and MIDI files, with a preview before you play.
 - **Practice tools:** slow down to 25 %, loop a section, wait for the right note,

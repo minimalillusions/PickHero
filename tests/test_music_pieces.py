@@ -1,5 +1,7 @@
 """Music choices must play what they preview, preserve history and lead on."""
 from copy import deepcopy
+import hashlib
+import json
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import Mock
@@ -140,6 +142,34 @@ def test_generation_is_idempotent_and_never_overwrites_custom_or_modified_files(
     with pytest.raises(ValueError, match='modified'):
         ensure_music(GUITAR, tmp_path)
     assert generated.read_bytes() == b'user edited this' and mine.read_bytes() == b'keep this'
+
+
+def test_a_piece_that_left_the_catalogue_takes_its_files_but_not_the_players(tmp_path):
+    """A replaced piece must not linger in the player's folder.
+
+    Only what the app wrote and nobody changed since goes; a changed copy and
+    anything named outside the folder stay where they are.
+    """
+    ensure_music(BASS_UKULELE, tmp_path)
+    folder = tmp_path/MUSIC_DIRNAME
+    marker = folder/'.pickhero-music.json'
+    owned = json.loads(marker.read_text(encoding='utf-8'))
+    written = hashlib.sha256(b'generated').hexdigest()
+    gone, changed = folder/'ph_retired_start.gp5', folder/'ph_retired_groove.gp5'
+    gone.write_bytes(b'generated')
+    changed.write_bytes(b'played with')
+    # Named like ours, but pointing out of the folder.
+    (folder/'ph_x').mkdir()
+    outside = tmp_path/'ph_outside_start.gp5'
+    outside.write_bytes(b'generated')
+    owned.update({gone.name: written, changed.name: written, 'ph_x/../../' + outside.name: written})
+    marker.write_text(json.dumps(owned), encoding='utf-8')
+    assert ensure_music(BASS_UKULELE, tmp_path)
+    assert not gone.exists()
+    assert changed.read_bytes() == b'played with' and outside.read_bytes() == b'generated'
+    assert gone.name not in json.loads(marker.read_text(encoding='utf-8'))
+    assert all((folder/p.filename(v)).is_file() for p in PIECES for v in VERSIONS)
+    assert not ensure_music(BASS_UKULELE, tmp_path)
 
 
 def test_unowned_filename_collision_is_preserved(tmp_path):
